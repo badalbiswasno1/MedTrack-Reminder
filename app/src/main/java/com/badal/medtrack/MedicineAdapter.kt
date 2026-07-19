@@ -11,7 +11,8 @@ class MedicineAdapter(
     private var items: List<Medicine>,
     private val onEdit: (Medicine) -> Unit,
     private val onDelete: (Medicine) -> Unit,
-    private val onTake: (Medicine) -> Unit = {}
+    private val onTake: (Medicine) -> Unit = {},
+    private val onCardClick: (Medicine) -> Unit = {}
 ) : RecyclerView.Adapter<MedicineAdapter.MedicineViewHolder>() {
 
     class MedicineViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -69,6 +70,7 @@ class MedicineAdapter(
         holder.editButton.setOnClickListener { onEdit(medicine) }
         holder.deleteButton.setOnClickListener { onDelete(medicine) }
         holder.takeButton.setOnClickListener { onTake(medicine) }
+        holder.itemView.setOnClickListener { onCardClick(medicine) }
     }
 
     override fun getItemCount(): Int = items.size

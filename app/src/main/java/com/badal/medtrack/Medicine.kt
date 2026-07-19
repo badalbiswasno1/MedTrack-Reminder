@@ -11,7 +11,12 @@ data class Medicine(
     val dose: String,
     val timesCsv: String,
     val quantity: Int,
-    val lowStockThreshold: Int = 10
+    val lowStockThreshold: Int = 10,
+    val genericName: String = "",
+    val doctorName: String = "",
+    val foodTiming: String = "",
+    val notes: String = "",
+    val expiryDate: String = ""
 )
 
 fun Medicine.timesList(): List<String> =

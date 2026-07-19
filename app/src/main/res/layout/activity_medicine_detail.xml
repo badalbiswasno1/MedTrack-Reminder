@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_gradient_header"
+            android:padding="24dp">
+
+            <TextView
+                android:id="@+id/detailNameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Medicine Name"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/detailGenericText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Generic Name"
+                android:textColor="#D9FFFFFF"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_card"
+            android:layout_margin="16dp"
+            android:padding="18dp"
+            android:elevation="2dp">
+
+            <TextView style="@style/DetailLabel" android:text="ডোজ" />
+            <TextView android:id="@+id/detailDoseText" style="@style/DetailValue" android:text="-" />
+
+            <TextView style="@style/DetailLabel" android:text="সময়সূচী" android:layout_marginTop="14dp" />
+            <TextView android:id="@+id/detailTimesText" style="@style/DetailValue" android:text="-" />
+
+            <TextView style="@style/DetailLabel" android:text="খাওয়ার আগে/পরে" android:layout_marginTop="14dp" />
+            <TextView android:id="@+id/detailFoodTimingText" style="@style/DetailValue" android:text="-" />
+
+            <TextView style="@style/DetailLabel" android:text="ডাক্তারের নাম" android:layout_marginTop="14dp" />
+            <TextView android:id="@+id/detailDoctorText" style="@style/DetailValue" android:text="-" />
+
+            <TextView style="@style/DetailLabel" android:text="মেয়াদ শেষের তারিখ" android:layout_marginTop="14dp" />
+            <TextView android:id="@+id/detailExpiryText" style="@style/DetailValue" android:text="-" />
+
+            <TextView style="@style/DetailLabel" android:text="বর্তমান স্টক" android:layout_marginTop="14dp" />
+            <TextView android:id="@+id/detailStockText" style="@style/DetailValue" android:text="-" />
+
+            <TextView style="@style/DetailLabel" android:text="নোট" android:layout_marginTop="14dp" />
+            <TextView android:id="@+id/detailNotesText" style="@style/DetailValue" android:text="-" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/detailEditButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="24dp"
+            android:text="এডিট করো"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textAlignment="center"
+            android:background="@color/primary"
+            android:padding="16dp" />
+
+    </LinearLayout>
+</ScrollView>

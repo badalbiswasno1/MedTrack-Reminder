@@ -70,7 +70,12 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             },
             onDelete = { medicine -> confirmDelete(medicine) },
-            onTake = { medicine -> markMedicineTaken(medicine) }
+            onTake = { medicine -> markMedicineTaken(medicine) },
+            onCardClick = { medicine ->
+                val intent = Intent(this, MedicineDetailActivity::class.java)
+                intent.putExtra("medicineId", medicine.id)
+                startActivity(intent)
+            }
         )
         recyclerView.adapter = adapter
         attachSwipeGestures()

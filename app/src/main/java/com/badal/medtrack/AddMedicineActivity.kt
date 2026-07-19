@@ -17,8 +17,13 @@ class AddMedicineActivity : AppCompatActivity() {
 
     private lateinit var repository: MedicineRepository
     private lateinit var nameInput: EditText
+    private lateinit var genericNameInput: EditText
     private lateinit var doseInput: EditText
     private lateinit var quantityInput: EditText
+    private lateinit var foodTimingInput: EditText
+    private lateinit var doctorNameInput: EditText
+    private lateinit var expiryDateInput: EditText
+    private lateinit var notesInput: EditText
     private lateinit var timesContainer: LinearLayout
     private lateinit var screenTitle: TextView
 
@@ -31,8 +36,13 @@ class AddMedicineActivity : AppCompatActivity() {
 
         repository = MedicineRepository(this)
         nameInput = findViewById(R.id.nameInput)
+        genericNameInput = findViewById(R.id.genericNameInput)
         doseInput = findViewById(R.id.doseInput)
         quantityInput = findViewById(R.id.quantityInput)
+        foodTimingInput = findViewById(R.id.foodTimingInput)
+        doctorNameInput = findViewById(R.id.doctorNameInput)
+        expiryDateInput = findViewById(R.id.expiryDateInput)
+        notesInput = findViewById(R.id.notesInput)
         timesContainer = findViewById(R.id.timesContainer)
         screenTitle = findViewById(R.id.screenTitle)
 
@@ -52,8 +62,13 @@ class AddMedicineActivity : AppCompatActivity() {
             if (medicine != null) {
                 editingMedicine = medicine
                 nameInput.setText(medicine.name)
+                genericNameInput.setText(medicine.genericName)
                 doseInput.setText(medicine.dose)
                 quantityInput.setText(medicine.quantity.toString())
+                foodTimingInput.setText(medicine.foodTiming)
+                doctorNameInput.setText(medicine.doctorName)
+                expiryDateInput.setText(medicine.expiryDate)
+                notesInput.setText(medicine.notes)
                 timeSlots.clear()
                 timeSlots.addAll(medicine.timesList())
                 refreshTimeRows()
@@ -91,11 +106,16 @@ class AddMedicineActivity : AppCompatActivity() {
 
     private fun saveMedicine() {
         val name = nameInput.text.toString().trim()
+        val genericName = genericNameInput.text.toString().trim()
         val dose = doseInput.text.toString().trim()
         val quantityStr = quantityInput.text.toString().trim()
+        val foodTiming = foodTimingInput.text.toString().trim()
+        val doctorName = doctorNameInput.text.toString().trim()
+        val expiryDate = expiryDateInput.text.toString().trim()
+        val notes = notesInput.text.toString().trim()
 
         if (name.isEmpty() || dose.isEmpty() || quantityStr.isEmpty()) {
-            Toast.makeText(this, "সব ঘর পূরণ করো", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "নাম, ডোজ ও পরিমাণ পূরণ করো", Toast.LENGTH_SHORT).show()
             return
         }
         if (timeSlots.isEmpty()) {
@@ -116,9 +136,14 @@ class AddMedicineActivity : AppCompatActivity() {
                 AlarmScheduler.cancelAllForMedicine(this@AddMedicineActivity, existing.id, existing.timesList().size)
                 val updated = existing.copy(
                     name = name,
+                    genericName = genericName,
                     dose = dose,
                     timesCsv = timeSlots.toCsv(),
-                    quantity = quantity
+                    quantity = quantity,
+                    foodTiming = foodTiming,
+                    doctorName = doctorName,
+                    expiryDate = expiryDate,
+                    notes = notes
                 )
                 repository.update(updated)
                 timeSlots.forEachIndexed { index, time ->
@@ -127,9 +152,14 @@ class AddMedicineActivity : AppCompatActivity() {
             } else {
                 val medicine = Medicine(
                     name = name,
+                    genericName = genericName,
                     dose = dose,
                     timesCsv = timeSlots.toCsv(),
-                    quantity = quantity
+                    quantity = quantity,
+                    foodTiming = foodTiming,
+                    doctorName = doctorName,
+                    expiryDate = expiryDate,
+                    notes = notes
                 )
                 val newId = repository.insert(medicine)
                 timeSlots.forEachIndexed { index, time ->

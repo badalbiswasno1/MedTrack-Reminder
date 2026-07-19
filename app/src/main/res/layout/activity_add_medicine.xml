@@ -17,7 +17,7 @@
             android:text="নতুন ওষুধ যোগ করো"
             android:textSize="22sp"
             android:textStyle="bold"
-            android:textColor="@color/text_primary"
+            android:textColor="@color/on_surface"
             android:layout_marginBottom="20dp" />
 
         <EditText
@@ -25,6 +25,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="ওষুধের নাম"
+            android:background="@drawable/bg_card"
+            android:padding="14dp"
+            android:layout_marginBottom="12dp" />
+
+        <EditText
+            android:id="@+id/genericNameInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="জেনেরিক নাম (ঐচ্ছিক)"
             android:background="@drawable/bg_card"
             android:padding="14dp"
             android:layout_marginBottom="12dp" />
@@ -48,12 +57,49 @@
             android:padding="14dp"
             android:layout_marginBottom="12dp" />
 
+        <EditText
+            android:id="@+id/foodTimingInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="খাওয়ার আগে / পরে"
+            android:background="@drawable/bg_card"
+            android:padding="14dp"
+            android:layout_marginBottom="12dp" />
+
+        <EditText
+            android:id="@+id/doctorNameInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="ডাক্তারের নাম (ঐচ্ছিক)"
+            android:background="@drawable/bg_card"
+            android:padding="14dp"
+            android:layout_marginBottom="12dp" />
+
+        <EditText
+            android:id="@+id/expiryDateInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="মেয়াদ শেষের তারিখ (যেমনঃ ১২/২০২৬)"
+            android:background="@drawable/bg_card"
+            android:padding="14dp"
+            android:layout_marginBottom="12dp" />
+
+        <EditText
+            android:id="@+id/notesInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="নোট (ঐচ্ছিক)"
+            android:minLines="2"
+            android:background="@drawable/bg_card"
+            android:padding="14dp"
+            android:layout_marginBottom="12dp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="খাওয়ার সময়গুলো"
             android:textStyle="bold"
-            android:textColor="@color/text_primary"
+            android:textColor="@color/on_surface"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp" />
 
