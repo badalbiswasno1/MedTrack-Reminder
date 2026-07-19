@@ -27,6 +27,7 @@
         <activity android:name=".MedicineDetailActivity" android:exported="false" />
         <activity android:name=".StatisticsActivity" android:exported="false" />
         <activity android:name=".CalendarActivity" android:exported="false" />
+        <activity android:name=".LowStockActivity" android:exported="false" />
 
         <receiver android:name=".DoseAlarmReceiver" android:exported="false" />
         <receiver android:name=".BootReceiver" android:exported="true">

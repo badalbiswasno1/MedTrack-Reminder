@@ -92,6 +92,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, CalendarActivity::class.java))
         }
 
+        findViewById<View>(R.id.lowStockButton).setOnClickListener {
+            startActivity(Intent(this, LowStockActivity::class.java))
+        }
+
         setGreeting()
         requestPermissionsIfNeeded()
         observeMedicines()
