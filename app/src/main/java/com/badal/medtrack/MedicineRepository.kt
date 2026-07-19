@@ -46,6 +46,10 @@ class MedicineRepository(context: Context) {
         logDao.updateStatus(logId, DoseStatus.TAKEN, System.currentTimeMillis())
     }
 
+    suspend fun markLogSkipped(logId: Long) {
+        logDao.updateStatus(logId, DoseStatus.SKIPPED, null)
+    }
+
     suspend fun markStaleLogsMissed() {
         val cutoff = startOfToday()
         val stale = logDao.getStalePending(cutoff)

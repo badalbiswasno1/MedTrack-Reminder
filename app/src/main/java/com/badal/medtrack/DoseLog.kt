@@ -18,4 +18,5 @@ object DoseStatus {
     const val PENDING = "PENDING"
     const val TAKEN = "TAKEN"
     const val MISSED = "MISSED"
+    const val SKIPPED = "SKIPPED"
 }

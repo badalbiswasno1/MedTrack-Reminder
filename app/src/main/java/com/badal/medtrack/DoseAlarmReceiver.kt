@@ -16,6 +16,7 @@ class DoseAlarmReceiver : BroadcastReceiver() {
         val medicineId = intent.getLongExtra("medicineId", -1)
         val slotIndex = intent.getIntExtra("slotIndex", 0)
         val isFollowUp = intent.getBooleanExtra("isFollowUp", false)
+        val existingLogId = intent.getLongExtra("existingLogId", -1)
 
         if (medicineId == -1L) return
 
@@ -26,7 +27,9 @@ class DoseAlarmReceiver : BroadcastReceiver() {
                 val medicine = repo.getById(medicineId)
                 if (medicine != null) {
                     val logId: Long
-                    if (!isFollowUp) {
+                    if (existingLogId != -1L) {
+                        logId = existingLogId
+                    } else if (!isFollowUp) {
                         logId = repo.createDoseLog(medicineId, slotIndex)
                     } else {
                         val pending = repo.getPendingLog(medicineId, slotIndex)
@@ -60,15 +63,41 @@ class DoseAlarmReceiver : BroadcastReceiver() {
         isFollowUp: Boolean,
         logId: Long
     ) {
+        val notifId = notificationId(medicine.id, slotIndex)
+
         val takenIntent = Intent(context, DoseActionReceiver::class.java).apply {
             action = DoseActionReceiver.ACTION_TAKEN
             putExtra("medicineId", medicine.id)
             putExtra("slotIndex", slotIndex)
             putExtra("logId", logId)
-            putExtra("notificationId", notificationId(medicine.id, slotIndex))
+            putExtra("notificationId", notifId)
         }
         val takenPendingIntent = PendingIntent.getBroadcast(
-            context, notificationId(medicine.id, slotIndex) + 5000, takenIntent,
+            context, notifId + 1, takenIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        val snoozeIntent = Intent(context, DoseActionReceiver::class.java).apply {
+            action = DoseActionReceiver.ACTION_SNOOZE
+            putExtra("medicineId", medicine.id)
+            putExtra("slotIndex", slotIndex)
+            putExtra("logId", logId)
+            putExtra("notificationId", notifId)
+        }
+        val snoozePendingIntent = PendingIntent.getBroadcast(
+            context, notifId + 2, snoozeIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        val skipIntent = Intent(context, DoseActionReceiver::class.java).apply {
+            action = DoseActionReceiver.ACTION_SKIP
+            putExtra("medicineId", medicine.id)
+            putExtra("slotIndex", slotIndex)
+            putExtra("logId", logId)
+            putExtra("notificationId", notifId)
+        }
+        val skipPendingIntent = PendingIntent.getBroadcast(
+            context, notifId + 3, skipIntent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
@@ -79,13 +108,16 @@ class DoseAlarmReceiver : BroadcastReceiver() {
             .setSmallIcon(android.R.drawable.ic_dialog_info)
             .setContentTitle(title)
             .setContentText(body)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(body))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)
-            .addAction(android.R.drawable.checkbox_on_background, "Taken", takenPendingIntent)
+            .addAction(android.R.drawable.checkbox_on_background, "✔ Taken", takenPendingIntent)
+            .addAction(android.R.drawable.ic_menu_recent_history, "⏰ Snooze 10m", snoozePendingIntent)
+            .addAction(android.R.drawable.ic_menu_close_clear_cancel, "❌ Skip", skipPendingIntent)
             .build()
 
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        manager.notify(notificationId(medicine.id, slotIndex), notification)
+        manager.notify(notifId, notification)
     }
 
     private fun notificationId(medicineId: Long, slotIndex: Int): Int =
