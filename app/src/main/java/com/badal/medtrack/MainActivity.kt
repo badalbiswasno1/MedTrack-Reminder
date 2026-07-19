@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.provider.Settings
 import android.view.View
 import android.widget.TextView
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
+import java.util.Calendar
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,6 +27,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: MedicineAdapter
     private lateinit var recyclerView: RecyclerView
     private lateinit var emptyText: TextView
+    private lateinit var greetingText: TextView
+    private lateinit var totalCountText: TextView
+    private lateinit var takenCountText: TextView
+    private lateinit var missedCountText: TextView
+    private lateinit var nextDoseCard: View
+    private lateinit var nextDoseName: TextView
+    private lateinit var nextDoseCountdown: TextView
+
+    private var countdownTimer: CountDownTimer? = null
 
     private val notificationPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { }
@@ -38,6 +49,14 @@ class MainActivity : AppCompatActivity() {
 
         recyclerView = findViewById(R.id.medicineRecyclerView)
         emptyText = findViewById(R.id.emptyText)
+        greetingText = findViewById(R.id.greetingText)
+        totalCountText = findViewById(R.id.totalCountText)
+        takenCountText = findViewById(R.id.takenCountText)
+        missedCountText = findViewById(R.id.missedCountText)
+        nextDoseCard = findViewById(R.id.nextDoseCard)
+        nextDoseName = findViewById(R.id.nextDoseName)
+        nextDoseCountdown = findViewById(R.id.nextDoseCountdown)
+
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         adapter = MedicineAdapter(
@@ -55,10 +74,30 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, AddMedicineActivity::class.java))
         }
 
+        setGreeting()
         requestPermissionsIfNeeded()
         observeMedicines()
         LowStockWorker.schedulePeriodic(this)
         MissedDoseWorker.schedulePeriodic(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadDashboardStats()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        countdownTimer?.cancel()
+    }
+
+    private fun setGreeting() {
+        val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+        greetingText.text = when {
+            hour < 12 -> "শুভ সকাল"
+            hour < 17 -> "শুভ বিকাল"
+            else -> "শুভ সন্ধ্যা"
+        }
     }
 
     private fun observeMedicines() {
@@ -67,8 +106,85 @@ class MainActivity : AppCompatActivity() {
                 adapter.updateItems(list)
                 emptyText.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
                 recyclerView.visibility = if (list.isEmpty()) View.GONE else View.VISIBLE
+                loadDashboardStats()
             }
         }
+    }
+
+    private fun loadDashboardStats() {
+        lifecycleScope.launch {
+            val medicines = repository.getAllList()
+            val todayLogs = repository.getTodayLogs()
+
+            val totalSlots = medicines.sumOf { it.timesList().size }
+            val taken = todayLogs.count { it.status == DoseStatus.TAKEN }
+            val missed = todayLogs.count { it.status == DoseStatus.MISSED }
+
+            totalCountText.text = totalSlots.toString()
+            takenCountText.text = taken.toString()
+            missedCountText.text = missed.toString()
+
+            showNextDose(medicines)
+        }
+    }
+
+    private fun showNextDose(medicines: List<Medicine>) {
+        countdownTimer?.cancel()
+
+        var soonestTimeMillis: Long = Long.MAX_VALUE
+        var soonestName = ""
+
+        val now = Calendar.getInstance()
+
+        for (medicine in medicines) {
+            for (timeStr in medicine.timesList()) {
+                val parts = timeStr.split(":")
+                if (parts.size != 2) continue
+                val hour = parts[0].toIntOrNull() ?: continue
+                val minute = parts[1].toIntOrNull() ?: continue
+
+                val candidate = Calendar.getInstance().apply {
+                    set(Calendar.HOUR_OF_DAY, hour)
+                    set(Calendar.MINUTE, minute)
+                    set(Calendar.SECOND, 0)
+                    set(Calendar.MILLISECOND, 0)
+                    if (before(now)) add(Calendar.DAY_OF_YEAR, 1)
+                }
+
+                if (candidate.timeInMillis < soonestTimeMillis) {
+                    soonestTimeMillis = candidate.timeInMillis
+                    soonestName = medicine.name
+                }
+            }
+        }
+
+        if (soonestTimeMillis == Long.MAX_VALUE) {
+            nextDoseCard.visibility = View.GONE
+            return
+        }
+
+        nextDoseCard.visibility = View.VISIBLE
+        nextDoseName.text = soonestName
+
+        val remaining = soonestTimeMillis - System.currentTimeMillis()
+        if (remaining <= 0) {
+            nextDoseCountdown.text = "এখনই"
+            return
+        }
+
+        countdownTimer = object : CountDownTimer(remaining, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                val h = millisUntilFinished / 3600000
+                val m = (millisUntilFinished % 3600000) / 60000
+                val s = (millisUntilFinished % 60000) / 1000
+                nextDoseCountdown.text = String.format("%02d:%02d:%02d", h, m, s)
+            }
+
+            override fun onFinish() {
+                nextDoseCountdown.text = "এখনই"
+                loadDashboardStats()
+            }
+        }.start()
     }
 
     private fun confirmDelete(medicine: Medicine) {
