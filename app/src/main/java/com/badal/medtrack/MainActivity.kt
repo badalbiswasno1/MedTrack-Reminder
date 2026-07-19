@@ -26,6 +26,9 @@ import android.graphics.Color
 import androidx.recyclerview.widget.ItemTouchHelper
 import android.graphics.Canvas
 import android.graphics.Color
+import androidx.recyclerview.widget.ItemTouchHelper
+import android.graphics.Canvas
+import android.graphics.Color
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 import java.util.Calendar
@@ -210,6 +213,56 @@ class MainActivity : AppCompatActivity() {
             }
             .setNegativeButton("না", null)
             .show()
+    }
+
+    private fun markMedicineTaken(medicine: Medicine) {
+        lifecycleScope.launch {
+            if (medicine.quantity <= 0) return@launch
+            repository.markDoseTaken(medicine.id)
+            val slotIndex = 0
+            val pending = repository.getPendingLog(medicine.id, slotIndex)
+            if (pending != null) {
+                repository.markLogTaken(pending.id)
+            }
+            loadDashboardStats()
+        }
+    }
+
+    private fun attachSwipeGestures() {
+        val callback = object : ItemTouchHelper.SimpleCallback(
+            0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        ) {
+            override fun onMove(rv: RecyclerView, vh: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean = false
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.bindingAdapterPosition
+                val medicine = adapter.getItemAt(position)
+                if (direction == ItemTouchHelper.RIGHT) {
+                    markMedicineTaken(medicine)
+                } else {
+                    val intent = Intent(this@MainActivity, AddMedicineActivity::class.java)
+                    intent.putExtra("medicineId", medicine.id)
+                    startActivity(intent)
+                }
+                adapter.notifyItemChanged(position)
+            }
+
+            override fun onChildDraw(
+                c: Canvas, rv: RecyclerView, viewHolder: RecyclerView.ViewHolder,
+                dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean
+            ) {
+                val itemView = viewHolder.itemView
+                val paint = android.graphics.Paint()
+                if (dX > 0) paint.color = Color.parseColor("#2E7D32") else paint.color = Color.parseColor("#00695C")
+                c.drawRoundRect(
+                    itemView.left.toFloat(), itemView.top.toFloat(),
+                    itemView.right.toFloat(), itemView.bottom.toFloat(),
+                    20f, 20f, paint
+                )
+                super.onChildDraw(c, rv, viewHolder, dX, dY, actionState, isCurrentlyActive)
+            }
+        }
+        ItemTouchHelper(callback).attachToRecyclerView(recyclerView)
     }
 
     private fun markMedicineTaken(medicine: Medicine) {
