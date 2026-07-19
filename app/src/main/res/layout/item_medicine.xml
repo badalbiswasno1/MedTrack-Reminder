@@ -6,7 +6,8 @@
     android:background="@drawable/bg_card"
     android:layout_marginHorizontal="16dp"
     android:layout_marginVertical="6dp"
-    android:padding="16dp">
+    android:padding="18dp"
+    android:elevation="2dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,15 +15,22 @@
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
+        <View
+            android:id="@+id/statusDot"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:background="@drawable/dot_success"
+            android:layout_marginEnd="10dp" />
+
         <TextView
             android:id="@+id/nameText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Medicine Name"
-            android:textSize="17sp"
+            android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="@color/text_primary" />
+            android:textColor="@color/on_surface" />
 
         <TextView
             android:id="@+id/lowStockBadge"
@@ -42,8 +50,8 @@
         android:id="@+id/doseText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:textColor="@color/text_secondary"
+        android:layout_marginTop="6dp"
+        android:textColor="@color/on_surface_variant"
         android:textSize="14sp"
         android:text="Dose" />
 
@@ -52,7 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
-        android:textColor="@color/text_secondary"
+        android:textColor="@color/on_surface_variant"
         android:textSize="14sp"
         android:text="Times" />
 
@@ -60,7 +68,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="14dp"
         android:gravity="center_vertical">
 
         <TextView
@@ -68,28 +76,68 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@color/text_primary"
+            android:textColor="@color/on_surface"
             android:textStyle="bold"
+            android:textSize="13sp"
             android:text="স্টক: 10" />
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/stockProgressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:layout_marginTop="6dp"
+        android:max="100"
+        android:progress="60"
+        android:progressTint="@color/success"
+        android:progressBackgroundTint="@color/outline" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="14dp"
+        android:weightSum="3">
+
+        <TextView
+            android:id="@+id/takeButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="✔ নেওয়া হয়েছে"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:textAlignment="center"
+            android:background="@drawable/bg_take_button"
+            android:padding="10dp"
+            android:layout_marginEnd="6dp" />
 
         <TextView
             android:id="@+id/editButton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="এডিট"
+            android:layout_weight="1"
+            android:text="✏ এডিট"
             android:textColor="@color/primary"
             android:textStyle="bold"
-            android:padding="8dp" />
+            android:textSize="12sp"
+            android:textAlignment="center"
+            android:padding="10dp" />
 
         <TextView
             android:id="@+id/deleteButton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="ডিলিট"
+            android:layout_weight="1"
+            android:text="🗑 ডিলিট"
             android:textColor="@color/danger"
             android:textStyle="bold"
-            android:padding="8dp"
-            android:layout_marginStart="4dp" />
+            android:textSize="12sp"
+            android:textAlignment="center"
+            android:padding="10dp" />
 
     </LinearLayout>
 
