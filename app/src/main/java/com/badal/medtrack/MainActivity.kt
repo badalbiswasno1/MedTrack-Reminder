@@ -58,6 +58,7 @@ class MainActivity : AppCompatActivity() {
         requestPermissionsIfNeeded()
         observeMedicines()
         LowStockWorker.schedulePeriodic(this)
+        MissedDoseWorker.schedulePeriodic(this)
     }
 
     private fun observeMedicines() {

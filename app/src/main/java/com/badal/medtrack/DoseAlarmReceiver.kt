@@ -25,12 +25,22 @@ class DoseAlarmReceiver : BroadcastReceiver() {
                 val repo = MedicineRepository(context)
                 val medicine = repo.getById(medicineId)
                 if (medicine != null) {
-                    showDoseNotification(context, medicine, slotIndex, isFollowUp)
+                    val logId: Long
+                    if (!isFollowUp) {
+                        logId = repo.createDoseLog(medicineId, slotIndex)
+                    } else {
+                        val pending = repo.getPendingLog(medicineId, slotIndex)
+                        if (pending == null) {
+                            pendingResult.finish()
+                            return@launch
+                        }
+                        logId = pending.id
+                    }
+
+                    showDoseNotification(context, medicine, slotIndex, isFollowUp, logId)
+
                     if (!isFollowUp) {
                         AlarmScheduler.scheduleFollowUp(context, medicineId, slotIndex)
-                    }
-                    // reschedule next day's dose for this slot
-                    if (!isFollowUp) {
                         val times = medicine.timesList()
                         if (slotIndex < times.size) {
                             AlarmScheduler.scheduleDose(context, medicineId, times[slotIndex], slotIndex)
@@ -47,12 +57,14 @@ class DoseAlarmReceiver : BroadcastReceiver() {
         context: Context,
         medicine: Medicine,
         slotIndex: Int,
-        isFollowUp: Boolean
+        isFollowUp: Boolean,
+        logId: Long
     ) {
         val takenIntent = Intent(context, DoseActionReceiver::class.java).apply {
             action = DoseActionReceiver.ACTION_TAKEN
             putExtra("medicineId", medicine.id)
             putExtra("slotIndex", slotIndex)
+            putExtra("logId", logId)
             putExtra("notificationId", notificationId(medicine.id, slotIndex))
         }
         val takenPendingIntent = PendingIntent.getBroadcast(

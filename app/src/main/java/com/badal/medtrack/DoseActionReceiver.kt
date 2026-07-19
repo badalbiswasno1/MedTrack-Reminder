@@ -19,6 +19,7 @@ class DoseActionReceiver : BroadcastReceiver() {
 
         val medicineId = intent.getLongExtra("medicineId", -1)
         val slotIndex = intent.getIntExtra("slotIndex", 0)
+        val logId = intent.getLongExtra("logId", -1)
         val notificationId = intent.getIntExtra("notificationId", -1)
 
         if (medicineId == -1L) return
@@ -28,6 +29,9 @@ class DoseActionReceiver : BroadcastReceiver() {
             try {
                 val repo = MedicineRepository(context)
                 repo.markDoseTaken(medicineId)
+                if (logId != -1L) {
+                    repo.markLogTaken(logId)
+                }
                 AlarmScheduler.cancelFollowUp(context, medicineId, slotIndex)
 
                 if (notificationId != -1) {
