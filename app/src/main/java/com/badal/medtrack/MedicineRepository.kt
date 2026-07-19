@@ -66,6 +66,12 @@ class MedicineRepository(context: Context) {
 
     suspend fun getLogsInRange(start: Long, end: Long): List<DoseLog> = logDao.getLogsInRange(start, end)
 
+    suspend fun getAllLogsAsc(): List<DoseLog> = logDao.getAllLogsAsc()
+
+    suspend fun getTotalTakenCount(): Int = logDao.getTotalTakenCount()
+
+    suspend fun getTotalMissedCount(): Int = logDao.getTotalMissedCount()
+
     private fun startOfToday(): Long {
         val cal = Calendar.getInstance()
         cal.set(Calendar.HOUR_OF_DAY, 0)

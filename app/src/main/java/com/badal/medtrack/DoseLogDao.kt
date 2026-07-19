@@ -22,4 +22,13 @@ interface DoseLogDao {
 
     @Query("SELECT * FROM dose_log WHERE scheduledDateTime >= :start AND scheduledDateTime < :end ORDER BY scheduledDateTime ASC")
     suspend fun getLogsInRange(start: Long, end: Long): List<DoseLog>
+
+    @Query("SELECT * FROM dose_log ORDER BY scheduledDateTime ASC")
+    suspend fun getAllLogsAsc(): List<DoseLog>
+
+    @Query("SELECT COUNT(*) FROM dose_log WHERE status = 'TAKEN'")
+    suspend fun getTotalTakenCount(): Int
+
+    @Query("SELECT COUNT(*) FROM dose_log WHERE status = 'MISSED'")
+    suspend fun getTotalMissedCount(): Int
 }

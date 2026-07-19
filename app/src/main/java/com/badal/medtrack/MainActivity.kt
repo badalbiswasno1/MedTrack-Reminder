@@ -84,6 +84,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, AddMedicineActivity::class.java))
         }
 
+        findViewById<View>(R.id.statsButton).setOnClickListener {
+            startActivity(Intent(this, StatisticsActivity::class.java))
+        }
+
         setGreeting()
         requestPermissionsIfNeeded()
         observeMedicines()

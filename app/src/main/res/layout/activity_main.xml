@@ -125,6 +125,19 @@
 
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/statsButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="12dp"
+                android:padding="10dp"
+                android:background="@drawable/bg_stat_card"
+                android:text="বিস্তারিত পরিসংখ্যান দেখো"
+                android:textColor="@color/primary"
+                android:textStyle="bold"
+                android:textSize="13sp" />
+
             <!-- Next Dose Card -->
             <LinearLayout
                 android:id="@+id/nextDoseCard"
