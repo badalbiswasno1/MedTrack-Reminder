@@ -88,6 +88,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, StatisticsActivity::class.java))
         }
 
+        findViewById<View>(R.id.calendarButton).setOnClickListener {
+            startActivity(Intent(this, CalendarActivity::class.java))
+        }
+
         setGreeting()
         requestPermissionsIfNeeded()
         observeMedicines()

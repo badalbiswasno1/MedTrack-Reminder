@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/bg_gradient_header"
+        android:padding="20dp"
+        android:gravity="center_vertical">
+
+        <ImageButton
+            android:id="@+id/prevMonthBtn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@android:drawable/ic_media_previous"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/monthYearText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="জুলাই ২০২৬"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/nextMonthBtn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@android:drawable/ic_media_next"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:tint="@color/white" />
+
+    </LinearLayout>
+
+    <GridLayout
+        android:id="@+id/weekDayHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="7"
+        android:padding="8dp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <GridLayout
+            android:id="@+id/calendarGrid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="7"
+            android:padding="8dp" />
+
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:gravity="center"
+        android:background="@drawable/bg_card">
+
+        <View android:layout_width="14dp" android:layout_height="14dp" android:background="@drawable/bg_day_taken" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text=" নেওয়া হয়েছে   " android:textSize="11sp" android:textColor="@color/on_surface_variant" />
+
+        <View android:layout_width="14dp" android:layout_height="14dp" android:background="@drawable/bg_day_missed" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text=" মিস হয়েছে   " android:textSize="11sp" android:textColor="@color/on_surface_variant" />
+
+        <View android:layout_width="14dp" android:layout_height="14dp" android:background="@drawable/bg_day_upcoming" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text=" আসন্ন" android:textSize="11sp" android:textColor="@color/on_surface_variant" />
+
+    </LinearLayout>
+
+</LinearLayout>
