@@ -9,6 +9,8 @@ class MedicineRepository(context: Context) {
 
     fun getAll(): Flow<List<Medicine>> = dao.getAll()
 
+    suspend fun getAllList(): List<Medicine> = dao.getAllList()
+
     suspend fun getById(id: Long): Medicine? = dao.getById(id)
 
     suspend fun insert(medicine: Medicine): Long = dao.insert(medicine)

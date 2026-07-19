@@ -9,6 +9,9 @@ interface MedicineDao {
     @Query("SELECT * FROM medicine ORDER BY name ASC")
     fun getAll(): Flow<List<Medicine>>
 
+    @Query("SELECT * FROM medicine")
+    suspend fun getAllList(): List<Medicine>
+
     @Query("SELECT * FROM medicine WHERE id = :id")
     suspend fun getById(id: Long): Medicine?
 
