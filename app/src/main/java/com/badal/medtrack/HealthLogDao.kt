@@ -20,4 +20,7 @@ interface HealthLogDao {
 
     @Query("DELETE FROM health_log WHERE id = :id")
     suspend fun deleteById(id: Long)
+
+    @Query("SELECT COUNT(*) FROM health_log WHERE type = :type AND recordedAt >= :start AND recordedAt < :end")
+    suspend fun getCountByTypeInRange(type: String, start: Long, end: Long): Int
 }

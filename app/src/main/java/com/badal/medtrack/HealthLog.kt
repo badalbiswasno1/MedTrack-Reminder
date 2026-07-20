@@ -7,6 +7,10 @@ object HealthType {
     const val BP = "BP"
     const val SUGAR = "SUGAR"
     const val WEIGHT = "WEIGHT"
+    const val HEART_RATE = "HEART_RATE"
+    const val SMOKING = "SMOKING"
+    const val WATER = "WATER"
+    const val LIPID = "LIPID"
 }
 
 @Entity(tableName = "health_log")

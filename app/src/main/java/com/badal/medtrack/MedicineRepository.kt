@@ -92,4 +92,15 @@ class MedicineRepository(context: Context) {
     suspend fun getAllHealthLogs(): List<HealthLog> = healthDao.getAll()
 
     suspend fun deleteHealthLog(id: Long) = healthDao.deleteById(id)
+
+    suspend fun getTodayCount(type: String): Int {
+        val cal = Calendar.getInstance()
+        cal.set(Calendar.HOUR_OF_DAY, 0)
+        cal.set(Calendar.MINUTE, 0)
+        cal.set(Calendar.SECOND, 0)
+        cal.set(Calendar.MILLISECOND, 0)
+        val start = cal.timeInMillis
+        val end = start + 24 * 60 * 60 * 1000
+        return healthDao.getCountByTypeInRange(type, start, end)
+    }
 }
