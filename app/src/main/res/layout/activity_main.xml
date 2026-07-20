@@ -177,6 +177,19 @@
                 android:textStyle="bold"
                 android:textSize="13sp" />
 
+            <TextView
+                android:id="@+id/darkModeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:padding="10dp"
+                android:background="@drawable/bg_stat_card"
+                android:text="থিম পরিবর্তন করুন"
+                android:textColor="@color/accent"
+                android:textStyle="bold"
+                android:textSize="13sp" />
+
             <!-- Next Dose Card -->
             <LinearLayout
                 android:id="@+id/nextDoseCard"

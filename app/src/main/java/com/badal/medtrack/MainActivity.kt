@@ -1,5 +1,7 @@
 package com.badal.medtrack
 
+import android.widget.Toast
+
 import android.Manifest
 import android.app.AlarmManager
 import android.content.Intent
@@ -98,6 +100,12 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<View>(R.id.searchButton).setOnClickListener {
             startActivity(Intent(this, SearchActivity::class.java))
+        }
+
+        findViewById<View>(R.id.darkModeButton).setOnClickListener {
+            val newMode = SettingsPrefs.cycleNightMode(this)
+            Toast.makeText(this, SettingsPrefs.modeLabel(newMode), Toast.LENGTH_SHORT).show()
+            recreate()
         }
 
         setGreeting()
