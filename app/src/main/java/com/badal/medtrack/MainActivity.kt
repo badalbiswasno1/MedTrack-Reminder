@@ -112,6 +112,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, BackupActivity::class.java))
         }
 
+        findViewById<View>(R.id.healthButton).setOnClickListener {
+            startActivity(Intent(this, HealthDashboardActivity::class.java))
+        }
+
         setGreeting()
         requestPermissionsIfNeeded()
         observeMedicines()

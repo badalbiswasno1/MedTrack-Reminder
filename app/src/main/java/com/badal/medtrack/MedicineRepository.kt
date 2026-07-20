@@ -8,6 +8,7 @@ class MedicineRepository(context: Context) {
 
     private val dao = AppDatabase.getInstance(context).medicineDao()
     private val logDao = AppDatabase.getInstance(context).doseLogDao()
+    private val healthDao = AppDatabase.getInstance(context).healthLogDao()
 
     fun getAll(): Flow<List<Medicine>> = dao.getAll()
 
@@ -80,4 +81,15 @@ class MedicineRepository(context: Context) {
         cal.set(Calendar.MILLISECOND, 0)
         return cal.timeInMillis
     }
+
+
+    suspend fun insertHealthLog(log: HealthLog): Long = healthDao.insert(log)
+
+    suspend fun getHealthLogsByType(type: String): List<HealthLog> = healthDao.getByType(type)
+
+    suspend fun getLatestHealthLog(type: String): HealthLog? = healthDao.getLatestByType(type)
+
+    suspend fun getAllHealthLogs(): List<HealthLog> = healthDao.getAll()
+
+    suspend fun deleteHealthLog(id: Long) = healthDao.deleteById(id)
 }
