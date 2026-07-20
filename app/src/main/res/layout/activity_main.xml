@@ -216,6 +216,19 @@
                 android:textStyle="bold"
                 android:textSize="13sp" />
 
+            <TextView
+                android:id="@+id/ocrButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:padding="10dp"
+                android:background="@drawable/bg_stat_card"
+                android:text="প্রেসক্রিপশন স্ক্যান করুন"
+                android:textColor="@color/secondary"
+                android:textStyle="bold"
+                android:textSize="13sp" />
+
             <!-- Next Dose Card -->
             <LinearLayout
                 android:id="@+id/nextDoseCard"

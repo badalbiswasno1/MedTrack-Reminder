@@ -36,6 +36,10 @@ class AddMedicineActivity : AppCompatActivity() {
 
         repository = MedicineRepository(this)
         nameInput = findViewById(R.id.nameInput)
+
+        intent.getStringExtra("prefillName")?.let { prefill ->
+            nameInput.setText(prefill)
+        }
         genericNameInput = findViewById(R.id.genericNameInput)
         doseInput = findViewById(R.id.doseInput)
         quantityInput = findViewById(R.id.quantityInput)

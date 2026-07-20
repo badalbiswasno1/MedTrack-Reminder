@@ -116,6 +116,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, HealthDashboardActivity::class.java))
         }
 
+        findViewById<View>(R.id.ocrButton).setOnClickListener {
+            startActivity(Intent(this, OcrScanActivity::class.java))
+        }
+
         setGreeting()
         requestPermissionsIfNeeded()
         observeMedicines()
@@ -150,6 +154,14 @@ class MainActivity : AppCompatActivity() {
                 recyclerView.visibility = if (list.isEmpty()) View.GONE else View.VISIBLE
                 loadDashboardStats()
             }
+        }
+    }
+
+    private fun refreshWidgets() {
+        val manager = android.appwidget.AppWidgetManager.getInstance(this)
+        val ids = manager.getAppWidgetIds(android.content.ComponentName(this, MedTrackWidgetProvider::class.java))
+        for (id in ids) {
+            MedTrackWidgetProvider.updateWidget(this, manager, id)
         }
     }
 

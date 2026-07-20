@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
+        <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
     <application
         android:name=".MedTrackApplication"
         android:allowBackup="true"
@@ -32,6 +34,7 @@
         <activity android:name=".SearchActivity" android:exported="false" />
         <activity android:name=".BackupActivity" android:exported="false" />
         <activity android:name=".HealthDashboardActivity" android:exported="false" />
+        <activity android:name=".OcrScanActivity" android:exported="false" />
 
         <receiver android:name=".DoseAlarmReceiver" android:exported="false" />
         <receiver android:name=".BootReceiver" android:exported="true">
@@ -49,5 +52,15 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+        <receiver
+            android:name=".MedTrackWidgetProvider"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_info" />
+        </receiver>
     </application>
 </manifest>
