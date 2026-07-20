@@ -96,6 +96,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, LowStockActivity::class.java))
         }
 
+        findViewById<View>(R.id.searchButton).setOnClickListener {
+            startActivity(Intent(this, SearchActivity::class.java))
+        }
+
         setGreeting()
         requestPermissionsIfNeeded()
         observeMedicines()
