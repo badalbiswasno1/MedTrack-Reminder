@@ -28,7 +28,7 @@
                     android:id="@+id/greetingText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="শুভ সকাল"
+                    android:text="@string/greeting_morning"
                     android:textColor="@color/white"
                     android:textSize="22sp"
                     android:textStyle="bold" />
@@ -37,7 +37,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:text="আজকের ওষুধের হিসাব দেখো"
+                    android:text="@string/home_subtitle"
                     android:textColor="#D9FFFFFF"
                     android:textSize="13sp" />
 
@@ -68,7 +68,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="আজকের ওষুধ"
+                            android:text="@string/today_medicines"
                             android:textColor="#D9FFFFFF"
                             android:textSize="11sp" />
                     </LinearLayout>
@@ -92,7 +92,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="খাওয়া হয়েছে"
+                            android:text="@string/taken_label"
                             android:textColor="#D9FFFFFF"
                             android:textSize="11sp" />
                     </LinearLayout>
@@ -116,7 +116,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="মিস হয়েছে"
+                            android:text="@string/missed_label"
                             android:textColor="#D9FFFFFF"
                             android:textSize="11sp" />
                     </LinearLayout>
@@ -146,7 +146,7 @@
                 android:layout_marginTop="8dp"
                 android:padding="10dp"
                 android:background="@drawable/bg_stat_card"
-                android:text="ক্যালেন্ডার দেখো"
+                android:text="@string/calendar_button"
                 android:textColor="@color/primary"
                 android:textStyle="bold"
                 android:textSize="13sp" />
@@ -159,7 +159,7 @@
                 android:layout_marginTop="8dp"
                 android:padding="10dp"
                 android:background="@drawable/bg_stat_card"
-                android:text="কম স্টক থাকা ওষুধ"
+                android:text="@string/low_stock_button"
                 android:textColor="@color/danger"
                 android:textStyle="bold"
                 android:textSize="13sp" />
@@ -172,7 +172,7 @@
                 android:layout_marginTop="8dp"
                 android:padding="10dp"
                 android:background="@drawable/bg_stat_card"
-                android:text="ওষুধ খুঁজুন"
+                android:text="@string/search_button"
                 android:textColor="@color/secondary"
                 android:textStyle="bold"
                 android:textSize="13sp" />
@@ -185,7 +185,7 @@
                 android:layout_marginTop="8dp"
                 android:padding="10dp"
                 android:background="@drawable/bg_stat_card"
-                android:text="থিম পরিবর্তন করুন"
+                android:text="@string/theme_button"
                 android:textColor="@color/accent"
                 android:textStyle="bold"
                 android:textSize="13sp" />
@@ -198,7 +198,7 @@
                 android:layout_marginTop="8dp"
                 android:padding="10dp"
                 android:background="@drawable/bg_stat_card"
-                android:text="ব্যাকআপ নিন"
+                android:text="@string/backup_button"
                 android:textColor="@color/success"
                 android:textStyle="bold"
                 android:textSize="13sp" />
@@ -211,7 +211,7 @@
                 android:layout_marginTop="8dp"
                 android:padding="10dp"
                 android:background="@drawable/bg_stat_card"
-                android:text="স্বাস্থ্য ড্যাশবোর্ড"
+                android:text="@string/health_button"
                 android:textColor="@color/primary"
                 android:textStyle="bold"
                 android:textSize="13sp" />
@@ -224,7 +224,7 @@
                 android:layout_marginTop="8dp"
                 android:padding="10dp"
                 android:background="@drawable/bg_stat_card"
-                android:text="প্রেসক্রিপশন স্ক্যান করুন"
+                android:text="@string/ocr_button"
                 android:textColor="@color/secondary"
                 android:textStyle="bold"
                 android:textSize="13sp" />
@@ -237,8 +237,21 @@
                 android:layout_marginTop="8dp"
                 android:padding="10dp"
                 android:background="@drawable/bg_stat_card"
-                android:text="ভয়েস রিমাইন্ডার: বন্ধ"
+                android:text="@string/voice_reminder_off"
                 android:textColor="@color/warning"
+                android:textStyle="bold"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/languageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:padding="10dp"
+                android:background="@drawable/bg_stat_card"
+                android:text="@string/language_button"
+                android:textColor="@color/accent"
                 android:textStyle="bold"
                 android:textSize="13sp" />
 

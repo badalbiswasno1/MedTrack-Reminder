@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MedTrack</string>
+
+    <!-- Home screen -->
+    <string name="today_medicines">Today\'s Medicines</string>
+    <string name="taken_label">Taken</string>
+    <string name="missed_label">Missed</string>
+    <string name="home_subtitle">Check today\'s medicine status</string>
+    <string name="add_medicine_fab">Add Medicine</string>
+    <string name="stats_button">📊 View Detailed Statistics</string>
+    <string name="calendar_button">View Calendar</string>
+    <string name="low_stock_button">Low Stock Medicines</string>
+    <string name="search_button">Search Medicines</string>
+    <string name="theme_button">Change Theme</string>
+    <string name="backup_button">Take Backup</string>
+    <string name="health_button">Health Dashboard</string>
+    <string name="ocr_button">Scan Prescription</string>
+    <string name="voice_reminder_on">Voice Reminder: On</string>
+    <string name="voice_reminder_off">Voice Reminder: Off</string>
+    <string name="language_button">Change Language / ভাষা পরিবর্তন</string>
+    <string name="greeting_morning">Good Morning</string>
+    <string name="greeting_afternoon">Good Afternoon</string>
+    <string name="greeting_evening">Good Evening</string>
+</resources>

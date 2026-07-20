@@ -26,7 +26,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.launch
 import java.util.Calendar
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     private lateinit var repository: MedicineRepository
     private lateinit var adapter: MedicineAdapter
@@ -118,6 +118,11 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<View>(R.id.ocrButton).setOnClickListener {
             startActivity(Intent(this, OcrScanActivity::class.java))
+        }
+
+        findViewById<View>(R.id.languageButton).setOnClickListener {
+            LocaleHelper.toggleLanguage(this)
+            recreate()
         }
 
         findViewById<View>(R.id.voiceReminderButton).setOnClickListener {
