@@ -13,6 +13,10 @@
         <item name="colorOutline">@color/outline</item>
         <item name="android:windowBackground">@color/background</item>
         <item name="android:statusBarColor">@color/primary</item>
+        <item name="android:textColorPrimary">@color/on_surface</item>
+        <item name="android:textColorSecondary">@color/on_surface_variant</item>
+        <item name="android:editTextColor">@color/on_surface</item>
+        <item name="android:textColorHint">@color/on_surface_variant</item>
         <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.MedTrack.Medium</item>
         <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.MedTrack.Large</item>
     </style>
