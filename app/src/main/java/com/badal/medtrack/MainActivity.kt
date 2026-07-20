@@ -102,15 +102,7 @@ class MainActivity : BaseActivity() {
             startActivity(Intent(this, SearchActivity::class.java))
         }
 
-        findViewById<View>(R.id.darkModeButton).setOnClickListener {
-            val newMode = SettingsPrefs.cycleNightMode(this)
-            Toast.makeText(this, SettingsPrefs.modeLabel(this, newMode), Toast.LENGTH_SHORT).show()
-            recreate()
-        }
 
-        findViewById<View>(R.id.backupButton).setOnClickListener {
-            startActivity(Intent(this, BackupActivity::class.java))
-        }
 
         findViewById<View>(R.id.healthButton).setOnClickListener {
             startActivity(Intent(this, HealthDashboardActivity::class.java))
@@ -120,15 +112,15 @@ class MainActivity : BaseActivity() {
             startActivity(Intent(this, OcrScanActivity::class.java))
         }
 
-        findViewById<View>(R.id.languageButton).setOnClickListener {
-            LocaleHelper.toggleLanguage(this)
-            recreate()
+        findViewById<View>(R.id.settingsButton).setOnClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java))
         }
 
-        findViewById<View>(R.id.voiceReminderButton).setOnClickListener {
-            val current = SettingsPrefs.isVoiceReminderEnabled(this)
-            updateVoiceReminderButtonLabel()
+        findViewById<View>(R.id.helpButton).setOnClickListener {
+            startActivity(Intent(this, HelpCenterActivity::class.java))
         }
+
+
 
         setGreeting()
         requestPermissionsIfNeeded()
@@ -340,9 +332,4 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    private fun updateVoiceReminderButtonLabel() {
-        val enabled = SettingsPrefs.isVoiceReminderEnabled(this)
-        val label = if (enabled) "ভয়েস রিমাইন্ডার: চালু" else "ভয়েস রিমাইন্ডার: বন্ধ"
-        findViewById<android.widget.TextView>(R.id.voiceReminderButton).text = label
-    }
 }

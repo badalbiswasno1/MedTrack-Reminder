@@ -22,4 +22,6 @@
     <string name="greeting_morning">শুভ সকাল</string>
     <string name="greeting_afternoon">শুভ বিকাল</string>
     <string name="greeting_evening">শুভ সন্ধ্যা</string>
+    <string name="settings_button">⚙️ সেটিংস</string>
+    <string name="help_button">❓ সাহায্য কেন্দ্র</string>
 </resources>

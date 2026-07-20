@@ -22,4 +22,6 @@
     <string name="greeting_morning">Good Morning</string>
     <string name="greeting_afternoon">Good Afternoon</string>
     <string name="greeting_evening">Good Evening</string>
+    <string name="settings_button">⚙️ Settings</string>
+    <string name="help_button">❓ Help Center</string>
 </resources>

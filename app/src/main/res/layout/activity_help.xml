@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="24dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_gradient_header"
+            android:padding="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="সাহায্য কেন্দ্র"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <!-- FAQ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_card"
+            android:layout_margin="16dp"
+            android:padding="18dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="সাধারণ জিজ্ঞাসা"
+                android:textColor="@color/on_surface"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginBottom="10dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="রিমাইন্ডার কাজ করছে না কেন?\nফোনের Battery Optimization থেকে MedTrack কে বাদ দিন (Settings → Apps → MedTrack → Battery → Unrestricted), এবং নোটিফিকেশন পারমিশন চালু আছে কিনা দেখুন।\n\nনোটিফিকেশন কেন আসছে না?\nSettings → Apps → MedTrack → Notifications এ গিয়ে সব notification channel চালু আছে কিনা যাচাই করুন। Do Not Disturb মোড বন্ধ রাখুন সময়মতো।\n\nব্যাকগ্রাউন্ডে অ্যাপ বন্ধ হয়ে যায় কেন?\nকিছু ফোনে (Xiaomi, Oppo, Vivo) নিজস্ব battery saver থাকে যা অ্যাপকে জোর করে বন্ধ করে দেয়। সেটিংসে গিয়ে MedTrack কে Autostart/Protected App হিসেবে চিহ্নিত করুন।\n\nওষুধ ম্যানেজমেন্ট কীভাবে করবো?\nহোম স্ক্রিনের + বাটনে ওষুধ যোগ করুন, স্টক ফুরিয়ে গেলে Low Stock পেজে দেখা যাবে, প্রতিদিনের হিসাব Statistics পেজে পাবেন।"
+                android:textColor="@color/on_surface_variant"
+                android:textSize="13sp"
+                android:lineSpacingExtra="6dp" />
+
+        </LinearLayout>
+
+        <!-- About -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_card"
+            android:layout_margin="16dp"
+            android:layout_marginTop="0dp"
+            android:padding="18dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="অ্যাপ সম্পর্কে"
+                android:textColor="@color/on_surface"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginBottom="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MedTrack — Version 1.0"
+                android:textColor="@color/on_surface_variant"
+                android:textSize="13sp"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Developer: Badal Biswas"
+                android:textColor="@color/on_surface_variant"
+                android:textSize="13sp"
+                android:layout_marginBottom="16dp" />
+
+            <TextView
+                android:id="@+id/contactButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_day_upcoming"
+                android:gravity="center"
+                android:padding="12dp"
+                android:text="✉️ ডেভেলপারকে ইমেইল করুন"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/shareButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_stat_card"
+                android:gravity="center"
+                android:padding="12dp"
+                android:text="📤 অ্যাপটি শেয়ার করুন"
+                android:textColor="@color/primary"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <!-- Privacy + Terms -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_card"
+            android:layout_margin="16dp"
+            android:layout_marginTop="0dp"
+            android:padding="18dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="গোপনীয়তা ও শর্তাবলী"
+                android:textColor="@color/on_surface"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginBottom="10dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="MedTrack আপনার কোনো ব্যক্তিগত তথ্য বাইরের সার্ভারে পাঠায় না। ওষুধ ও স্বাস্থ্য সংক্রান্ত সব তথ্য শুধু আপনার ফোনেই সংরক্ষিত থাকে। ব্যাকআপ ফাইল আপনি নিজে শেয়ার না করলে অন্য কোথাও যায় না।\n\nএই অ্যাপ কোনো চিকিৎসা পরামর্শ প্রদান করে না। ওষুধ সংক্রান্ত যেকোনো সিদ্ধান্তের আগে ডাক্তারের পরামর্শ নিন।"
+                android:textColor="@color/on_surface_variant"
+                android:textSize="13sp"
+                android:lineSpacingExtra="6dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
