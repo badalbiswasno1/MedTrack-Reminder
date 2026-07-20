@@ -8,7 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 import java.io.File
 
-class BackupActivity : AppCompatActivity() {
+class BackupActivity : BaseActivity() {
 
     private lateinit var repository: MedicineRepository
     private var lastExportedFile: File? = null

@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.launch
 
-class LowStockActivity : AppCompatActivity() {
+class LowStockActivity : BaseActivity() {
 
     private lateinit var repository: MedicineRepository
     private lateinit var adapter: LowStockAdapter

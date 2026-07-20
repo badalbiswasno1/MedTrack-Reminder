@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import java.util.Calendar
 import java.util.Locale
 
-class CalendarActivity : AppCompatActivity() {
+class CalendarActivity : BaseActivity() {
 
     private lateinit var repository: MedicineRepository
     private val displayCal = Calendar.getInstance()

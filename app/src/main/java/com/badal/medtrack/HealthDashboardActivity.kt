@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class HealthDashboardActivity : AppCompatActivity() {
+class HealthDashboardActivity : BaseActivity() {
 
     private lateinit var repository: MedicineRepository
     private val dateFormat = SimpleDateFormat("dd MMM, hh:mm a", Locale.getDefault())

@@ -13,7 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 import java.util.Calendar
 
-class AddMedicineActivity : AppCompatActivity() {
+class AddMedicineActivity : BaseActivity() {
 
     private lateinit var repository: MedicineRepository
     private lateinit var nameInput: EditText

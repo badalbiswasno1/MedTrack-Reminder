@@ -17,7 +17,7 @@ import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import java.io.File
 
-class OcrScanActivity : AppCompatActivity() {
+class OcrScanActivity : BaseActivity() {
 
     private var cameraImageUri: Uri? = null
 
