@@ -14,11 +14,19 @@ class CalendarActivity : BaseActivity() {
 
     private lateinit var repository: MedicineRepository
     private val displayCal = Calendar.getInstance()
+    private val monthNamesEn = listOf(
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    )
     private val monthNamesBn = listOf(
         "জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন",
         "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর"
     )
+    private val weekDaysEn = listOf("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
     private val weekDaysBn = listOf("রবি", "সোম", "মঙ্গল", "বুধ", "বৃহঃ", "শুক্র", "শনি")
+
+    private fun monthNames() = if (LocaleHelper.getLanguage(this) == "en") monthNamesEn else monthNamesBn
+    private fun weekDays() = if (LocaleHelper.getLanguage(this) == "en") weekDaysEn else weekDaysBn
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +52,7 @@ class CalendarActivity : BaseActivity() {
     private fun setupWeekDayHeader() {
         val header = findViewById<GridLayout>(R.id.weekDayHeader)
         header.removeAllViews()
-        for (day in weekDaysBn) {
+        for (day in weekDays()) {
             val tv = TextView(this)
             tv.text = day
             tv.textSize = 11f
@@ -61,7 +69,7 @@ class CalendarActivity : BaseActivity() {
 
     private fun loadMonth() {
         findViewById<TextView>(R.id.monthYearText).text =
-            "${monthNamesBn[displayCal.get(Calendar.MONTH)]} ${displayCal.get(Calendar.YEAR)}"
+            "${monthNames()[displayCal.get(Calendar.MONTH)]} ${displayCal.get(Calendar.YEAR)}"
 
         lifecycleScope.launch {
             val monthStart = Calendar.getInstance()

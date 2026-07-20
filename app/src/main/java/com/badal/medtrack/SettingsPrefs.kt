@@ -40,11 +40,12 @@ object SettingsPrefs {
         prefs.edit().putBoolean(KEY_VOICE_REMINDER, enabled).apply()
     }
 
-    fun modeLabel(mode: Int): String {
+    fun modeLabel(context: Context, mode: Int): String {
+        val isEnglish = LocaleHelper.getLanguage(context) == "en"
         return when (mode) {
-            AppCompatDelegate.MODE_NIGHT_NO -> "লাইট মোড"
-            AppCompatDelegate.MODE_NIGHT_YES -> "ডার্ক মোড"
-            else -> "সিস্টেম অনুযায়ী"
+            AppCompatDelegate.MODE_NIGHT_NO -> if (isEnglish) "Light Mode" else "লাইট মোড"
+            AppCompatDelegate.MODE_NIGHT_YES -> if (isEnglish) "Dark Mode" else "ডার্ক মোড"
+            else -> if (isEnglish) "System Default" else "সিস্টেম অনুযায়ী"
         }
     }
 }

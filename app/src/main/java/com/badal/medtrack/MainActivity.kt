@@ -104,7 +104,7 @@ class MainActivity : BaseActivity() {
 
         findViewById<View>(R.id.darkModeButton).setOnClickListener {
             val newMode = SettingsPrefs.cycleNightMode(this)
-            Toast.makeText(this, SettingsPrefs.modeLabel(newMode), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, SettingsPrefs.modeLabel(this, newMode), Toast.LENGTH_SHORT).show()
             recreate()
         }
 

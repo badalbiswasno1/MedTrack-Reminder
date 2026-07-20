@@ -35,7 +35,7 @@ class StatisticsActivity : BaseActivity() {
             findViewById<TextView>(R.id.longestStreakText).text =
                 StatsCalculator.longestStreak(allLogs).toString()
 
-            buildWeeklyChart(StatsCalculator.weeklyBreakdown(allLogs))
+            buildWeeklyChart(StatsCalculator.weeklyBreakdown(allLogs, LocaleHelper.getLanguage(this@StatisticsActivity) == "en"))
         }
     }
 

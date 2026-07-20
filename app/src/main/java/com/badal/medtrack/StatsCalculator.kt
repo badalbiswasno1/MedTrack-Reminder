@@ -12,10 +12,13 @@ object StatsCalculator {
         return ((taken.toFloat() / total) * 100).toInt()
     }
 
-    fun weeklyBreakdown(logs: List<DoseLog>): List<DayStat> {
+    fun weeklyBreakdown(logs: List<DoseLog>, isEnglish: Boolean = false): List<DayStat> {
         val cal = Calendar.getInstance()
         val result = mutableListOf<DayStat>()
-        val dayLabels = listOf("রবি", "সোম", "মঙ্গল", "বুধ", "বৃহঃ", "শুক্র", "শনি")
+        val dayLabels = if (isEnglish)
+            listOf("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
+        else
+            listOf("রবি", "সোম", "মঙ্গল", "বুধ", "বৃহঃ", "শুক্র", "শনি")
 
         for (i in 6 downTo 0) {
             val dayCal = Calendar.getInstance()
