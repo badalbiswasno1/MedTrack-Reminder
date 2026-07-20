@@ -24,6 +24,17 @@ class AddMedicineActivity : BaseActivity() {
     private lateinit var quantityInput: EditText
     private lateinit var foodTimingInput: Spinner
     private val foodTimingOptions = arrayOf("খাওয়ার আগে", "খাওয়ার পরে", "খাওয়ার সাথে", "যেকোনো সময়")
+    private lateinit var medicineTypeInput: Spinner
+    private val medicineTypeOptions = arrayOf("ট্যাবলেট", "ক্যাপসুল", "সিরাপ", "ইনজেকশন", "ড্রপস", "ইনহেলার")
+    private lateinit var repeatPatternInput: Spinner
+    private val repeatPatternOptions = arrayOf("প্রতিদিন", "একদিন পরপর", "নির্দিষ্ট দিন")
+    private val repeatPatternValues = arrayOf("DAILY", "ALTERNATE", "SPECIFIC")
+    private lateinit var colorSwatchContainer: LinearLayout
+    private lateinit var specificDaysContainer: LinearLayout
+    private val presetColors = listOf("#00695C", "#FF8A65", "#D32F2F", "#1976D2", "#7B1FA2", "#F57C00")
+    private val weekDayNames = listOf("রবি", "সোম", "মঙ্গল", "বুধ", "বৃহঃ", "শুক্র", "শনি")
+    private var selectedColor = "#00695C"
+    private val selectedDays = mutableSetOf<Int>()
     private lateinit var doctorNameInput: EditText
     private lateinit var expiryDateInput: EditText
     private lateinit var notesInput: EditText
@@ -49,6 +60,25 @@ class AddMedicineActivity : BaseActivity() {
         foodTimingInput = findViewById(R.id.foodTimingInput)
         val foodTimingAdapter = android.widget.ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, foodTimingOptions)
         foodTimingInput.adapter = foodTimingAdapter
+
+        medicineTypeInput = findViewById(R.id.medicineTypeInput)
+        val medicineTypeAdapter = android.widget.ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, medicineTypeOptions)
+        medicineTypeInput.adapter = medicineTypeAdapter
+
+        repeatPatternInput = findViewById(R.id.repeatPatternInput)
+        val repeatAdapter = android.widget.ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, repeatPatternOptions)
+        repeatPatternInput.adapter = repeatAdapter
+        repeatPatternInput.onItemSelectedListener = object : android.widget.AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: android.widget.AdapterView<*>?, view: View?, position: Int, id: Long) {
+                specificDaysContainer.visibility = if (repeatPatternValues[position] == "SPECIFIC") View.VISIBLE else View.GONE
+            }
+            override fun onNothingSelected(parent: android.widget.AdapterView<*>?) {}
+        }
+
+        colorSwatchContainer = findViewById(R.id.colorSwatchContainer)
+        specificDaysContainer = findViewById(R.id.specificDaysContainer)
+        setupColorSwatches()
+        setupDayCheckboxes()
         doctorNameInput = findViewById(R.id.doctorNameInput)
         expiryDateInput = findViewById(R.id.expiryDateInput)
         notesInput = findViewById(R.id.notesInput)
@@ -82,6 +112,21 @@ class AddMedicineActivity : BaseActivity() {
                 timeSlots.clear()
                 timeSlots.addAll(medicine.timesList())
                 refreshTimeRows()
+
+                val typeIndex = medicineTypeOptions.indexOf(medicine.medicineType)
+                if (typeIndex >= 0) medicineTypeInput.setSelection(typeIndex)
+
+                selectedColor = medicine.colorHex
+                setupColorSwatches()
+
+                val repeatIndex = repeatPatternValues.indexOf(medicine.repeatPattern)
+                if (repeatIndex >= 0) repeatPatternInput.setSelection(repeatIndex)
+
+                if (medicine.repeatDaysCsv.isNotBlank()) {
+                    selectedDays.clear()
+                    medicine.repeatDaysCsv.split(",").mapNotNull { it.toIntOrNull() }.forEach { selectedDays.add(it) }
+                    setupDayCheckboxes()
+                }
             }
         }
     }
@@ -114,12 +159,68 @@ class AddMedicineActivity : BaseActivity() {
         }
     }
 
+    private fun setupColorSwatches() {
+        colorSwatchContainer.removeAllViews()
+        for (colorHex in presetColors) {
+            val swatch = View(this)
+            val size = (36 * resources.displayMetrics.density).toInt()
+            val params = LinearLayout.LayoutParams(size, size)
+            params.marginEnd = (10 * resources.displayMetrics.density).toInt()
+            swatch.layoutParams = params
+
+            val shape = android.graphics.drawable.GradientDrawable()
+            shape.shape = android.graphics.drawable.GradientDrawable.OVAL
+            shape.setColor(android.graphics.Color.parseColor(colorHex))
+            swatch.background = shape
+
+            swatch.setOnClickListener {
+                selectedColor = colorHex
+                setupColorSwatches()
+            }
+
+            if (colorHex == selectedColor) {
+                val ring = android.widget.FrameLayout(this)
+                ring.layoutParams = params
+                ring.setBackgroundResource(R.drawable.bg_color_swatch_selected)
+                val inner = View(this)
+                val innerParams = android.widget.FrameLayout.LayoutParams(size - 10, size - 10)
+                innerParams.gravity = android.view.Gravity.CENTER
+                inner.layoutParams = innerParams
+                inner.background = shape
+                ring.addView(inner)
+                colorSwatchContainer.addView(ring)
+            } else {
+                colorSwatchContainer.addView(swatch)
+            }
+        }
+    }
+
+    private fun setupDayCheckboxes() {
+        specificDaysContainer.removeAllViews()
+        weekDayNames.forEachIndexed { index, name ->
+            val cb = android.widget.CheckBox(this)
+            cb.text = name
+            cb.textSize = 11f
+            cb.isChecked = selectedDays.contains(index)
+            cb.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) selectedDays.add(index) else selectedDays.remove(index)
+            }
+            val params = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+            cb.layoutParams = params
+            specificDaysContainer.addView(cb)
+        }
+    }
+
     private fun saveMedicine() {
         val name = nameInput.text.toString().trim()
         val genericName = genericNameInput.text.toString().trim()
         val dose = doseInput.text.toString().trim()
         val quantityStr = quantityInput.text.toString().trim()
         val foodTiming = foodTimingInput.selectedItem?.toString() ?: ""
+        val medicineType = medicineTypeInput.selectedItem?.toString() ?: ""
+        val repeatIndex = repeatPatternInput.selectedItemPosition
+        val repeatPattern = if (repeatIndex in repeatPatternValues.indices) repeatPatternValues[repeatIndex] else "DAILY"
+        val repeatDaysCsv = if (repeatPattern == "SPECIFIC") selectedDays.sorted().joinToString(",") else ""
         val doctorName = doctorNameInput.text.toString().trim()
         val expiryDate = expiryDateInput.text.toString().trim()
         val notes = notesInput.text.toString().trim()
@@ -153,7 +254,11 @@ class AddMedicineActivity : BaseActivity() {
                     foodTiming = foodTiming,
                     doctorName = doctorName,
                     expiryDate = expiryDate,
-                    notes = notes
+                    notes = notes,
+                    medicineType = medicineType,
+                    colorHex = selectedColor,
+                    repeatPattern = repeatPattern,
+                    repeatDaysCsv = repeatDaysCsv
                 )
                 repository.update(updated)
                 timeSlots.forEachIndexed { index, time ->
@@ -169,7 +274,11 @@ class AddMedicineActivity : BaseActivity() {
                     foodTiming = foodTiming,
                     doctorName = doctorName,
                     expiryDate = expiryDate,
-                    notes = notes
+                    notes = notes,
+                    medicineType = medicineType,
+                    colorHex = selectedColor,
+                    repeatPattern = repeatPattern,
+                    repeatDaysCsv = repeatDaysCsv
                 )
                 val newId = repository.insert(medicine)
                 timeSlots.forEachIndexed { index, time ->

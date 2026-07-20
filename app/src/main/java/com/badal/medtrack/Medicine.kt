@@ -16,7 +16,11 @@ data class Medicine(
     val doctorName: String = "",
     val foodTiming: String = "",
     val notes: String = "",
-    val expiryDate: String = ""
+    val expiryDate: String = "",
+    val medicineType: String = "ট্যাবলেট",
+    val colorHex: String = "#00695C",
+    val repeatPattern: String = "DAILY",
+    val repeatDaysCsv: String = ""
 )
 
 fun Medicine.timesList(): List<String> =
