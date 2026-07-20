@@ -62,5 +62,6 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_info" />
         </receiver>
+        <service android:name=".VoiceReminderService" android:exported="false" />
     </application>
 </manifest>

@@ -120,6 +120,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, OcrScanActivity::class.java))
         }
 
+        findViewById<View>(R.id.voiceReminderButton).setOnClickListener {
+            val current = SettingsPrefs.isVoiceReminderEnabled(this)
+            updateVoiceReminderButtonLabel()
+        }
+
         setGreeting()
         requestPermissionsIfNeeded()
         observeMedicines()
@@ -328,5 +333,11 @@ class MainActivity : AppCompatActivity() {
                     .show()
             }
         }
+    }
+
+    private fun updateVoiceReminderButtonLabel() {
+        val enabled = SettingsPrefs.isVoiceReminderEnabled(this)
+        val label = if (enabled) "ভয়েস রিমাইন্ডার: চালু" else "ভয়েস রিমাইন্ডার: বন্ধ"
+        findViewById<android.widget.TextView>(R.id.voiceReminderButton).text = label
     }
 }

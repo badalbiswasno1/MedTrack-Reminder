@@ -101,6 +101,14 @@ class DoseAlarmReceiver : BroadcastReceiver() {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
+        if (SettingsPrefs.isVoiceReminderEnabled(context)) {
+            val voiceIntent = Intent(context, VoiceReminderService::class.java).apply {
+                putExtra("medicineName", medicine.name)
+                putExtra("medicineDose", medicine.dose)
+            }
+            context.startService(voiceIntent)
+        }
+
         val title = if (isFollowUp) "মনে করিয়ে দিচ্ছি: ${medicine.name}" else "ওষুধ খাওয়ার সময় হয়েছে"
         val body = "${medicine.name} - ${medicine.dose}"
 

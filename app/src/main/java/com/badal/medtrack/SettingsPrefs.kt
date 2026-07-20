@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatDelegate
 object SettingsPrefs {
     private const val PREFS_NAME = "medtrack_settings"
     private const val KEY_NIGHT_MODE = "night_mode"
+    private const val KEY_VOICE_REMINDER = "voice_reminder_enabled"
 
     fun getNightMode(context: Context): Int {
         val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
@@ -27,6 +28,16 @@ object SettingsPrefs {
         }
         setNightMode(context, next)
         return next
+    }
+
+    fun isVoiceReminderEnabled(context: Context): Boolean {
+        val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        return prefs.getBoolean(KEY_VOICE_REMINDER, false)
+    }
+
+    fun setVoiceReminderEnabled(context: Context, enabled: Boolean) {
+        val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        prefs.edit().putBoolean(KEY_VOICE_REMINDER, enabled).apply()
     }
 
     fun modeLabel(mode: Int): String {
