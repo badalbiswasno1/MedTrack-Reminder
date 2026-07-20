@@ -108,6 +108,10 @@ class MainActivity : AppCompatActivity() {
             recreate()
         }
 
+        findViewById<View>(R.id.backupButton).setOnClickListener {
+            startActivity(Intent(this, BackupActivity::class.java))
+        }
+
         setGreeting()
         requestPermissionsIfNeeded()
         observeMedicines()
