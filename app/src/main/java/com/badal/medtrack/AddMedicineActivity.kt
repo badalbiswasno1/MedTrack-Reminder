@@ -1,5 +1,7 @@
 package com.badal.medtrack
 
+import android.widget.Spinner
+
 import android.app.TimePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -20,7 +22,8 @@ class AddMedicineActivity : BaseActivity() {
     private lateinit var genericNameInput: EditText
     private lateinit var doseInput: EditText
     private lateinit var quantityInput: EditText
-    private lateinit var foodTimingInput: EditText
+    private lateinit var foodTimingInput: Spinner
+    private val foodTimingOptions = arrayOf("খাওয়ার আগে", "খাওয়ার পরে", "খাওয়ার সাথে", "যেকোনো সময়")
     private lateinit var doctorNameInput: EditText
     private lateinit var expiryDateInput: EditText
     private lateinit var notesInput: EditText
@@ -44,6 +47,8 @@ class AddMedicineActivity : BaseActivity() {
         doseInput = findViewById(R.id.doseInput)
         quantityInput = findViewById(R.id.quantityInput)
         foodTimingInput = findViewById(R.id.foodTimingInput)
+        val foodTimingAdapter = android.widget.ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, foodTimingOptions)
+        foodTimingInput.adapter = foodTimingAdapter
         doctorNameInput = findViewById(R.id.doctorNameInput)
         expiryDateInput = findViewById(R.id.expiryDateInput)
         notesInput = findViewById(R.id.notesInput)
@@ -69,7 +74,8 @@ class AddMedicineActivity : BaseActivity() {
                 genericNameInput.setText(medicine.genericName)
                 doseInput.setText(medicine.dose)
                 quantityInput.setText(medicine.quantity.toString())
-                foodTimingInput.setText(medicine.foodTiming)
+                val foodTimingIndex = foodTimingOptions.indexOf(medicine.foodTiming)
+                if (foodTimingIndex >= 0) foodTimingInput.setSelection(foodTimingIndex)
                 doctorNameInput.setText(medicine.doctorName)
                 expiryDateInput.setText(medicine.expiryDate)
                 notesInput.setText(medicine.notes)
@@ -113,7 +119,7 @@ class AddMedicineActivity : BaseActivity() {
         val genericName = genericNameInput.text.toString().trim()
         val dose = doseInput.text.toString().trim()
         val quantityStr = quantityInput.text.toString().trim()
-        val foodTiming = foodTimingInput.text.toString().trim()
+        val foodTiming = foodTimingInput.selectedItem?.toString() ?: ""
         val doctorName = doctorNameInput.text.toString().trim()
         val expiryDate = expiryDateInput.text.toString().trim()
         val notes = notesInput.text.toString().trim()
