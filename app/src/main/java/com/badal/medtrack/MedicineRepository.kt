@@ -113,4 +113,25 @@ class MedicineRepository(context: Context) {
     suspend fun getUpcomingAppointments(): List<DoctorAppointment> = appointmentDao.getUpcoming(System.currentTimeMillis())
 
     suspend fun deleteAppointment(id: Long) = appointmentDao.deleteById(id)
+
+    suspend fun getDailyCounts(type: String, days: Int): List<Pair<String, Int>> {
+        val result = mutableListOf<Pair<String, Int>>()
+        val dayNames = listOf("রবি", "সোম", "মঙ্গল", "বুধ", "বৃহঃ", "শুক্র", "শনি")
+
+        for (i in (days - 1) downTo 0) {
+            val cal = Calendar.getInstance()
+            cal.add(Calendar.DAY_OF_YEAR, -i)
+            cal.set(Calendar.HOUR_OF_DAY, 0)
+            cal.set(Calendar.MINUTE, 0)
+            cal.set(Calendar.SECOND, 0)
+            cal.set(Calendar.MILLISECOND, 0)
+            val start = cal.timeInMillis
+            val end = start + 24 * 60 * 60 * 1000
+
+            val count = healthDao.getCountByTypeInRange(type, start, end)
+            val label = dayNames[cal.get(Calendar.DAY_OF_WEEK) - 1]
+            result.add(label to count)
+        }
+        return result
+    }
 }

@@ -215,6 +215,51 @@ class HealthDashboardActivity : BaseActivity() {
             val waterCount = repository.getTodayCount(HealthType.WATER)
             findViewById<TextView>(R.id.smokingCountText).text = smokingCount.toString()
             findViewById<TextView>(R.id.waterCountText).text = waterCount.toString()
+
+            val smokingHistory = repository.getDailyCounts(HealthType.SMOKING, 7)
+            val waterHistory = repository.getDailyCounts(HealthType.WATER, 7)
+            buildHistoryBars(findViewById(R.id.smokingHistoryContainer), smokingHistory, R.color.secondary)
+            buildHistoryBars(findViewById(R.id.waterHistoryContainer), waterHistory, R.color.primary)
+        }
+    }
+
+    private fun buildHistoryBars(container: android.widget.LinearLayout, data: List<Pair<String, Int>>, colorRes: Int) {
+        container.removeAllViews()
+        val maxCount = data.maxOfOrNull { it.second }?.coerceAtLeast(1) ?: 1
+
+        for ((label, count) in data) {
+            val column = android.widget.LinearLayout(this)
+            column.orientation = android.widget.LinearLayout.VERTICAL
+            column.gravity = android.view.Gravity.BOTTOM or android.view.Gravity.CENTER_HORIZONTAL
+            val columnParams = android.widget.LinearLayout.LayoutParams(0, android.widget.LinearLayout.LayoutParams.MATCH_PARENT, 1f)
+            columnParams.marginStart = 4
+            columnParams.marginEnd = 4
+            column.layoutParams = columnParams
+
+            if (count > 0) {
+                val bar = android.view.View(this)
+                val heightPx = ((count.toFloat() / maxCount) * 50).toInt().coerceAtLeast(6)
+                bar.layoutParams = android.widget.LinearLayout.LayoutParams(30, heightPx)
+                val shape = android.graphics.drawable.GradientDrawable()
+                shape.setColor(getColor(colorRes))
+                shape.cornerRadius = 6f
+                bar.background = shape
+                column.addView(bar)
+            }
+
+            val labelView = TextView(this)
+            labelView.text = label
+            labelView.textSize = 9f
+            labelView.setTextColor(getColor(R.color.on_surface_variant))
+            labelView.gravity = android.view.Gravity.CENTER
+            val labelParams = android.widget.LinearLayout.LayoutParams(
+                android.widget.LinearLayout.LayoutParams.WRAP_CONTENT, android.widget.LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            labelParams.topMargin = 4
+            labelView.layoutParams = labelParams
+            column.addView(labelView)
+
+            container.addView(column)
         }
     }
 }
