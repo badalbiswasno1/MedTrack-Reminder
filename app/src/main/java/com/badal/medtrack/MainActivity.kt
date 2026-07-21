@@ -84,6 +84,10 @@ class MainActivity : BaseActivity() {
         recyclerView.adapter = adapter
         attachSwipeGestures()
 
+        findViewById<View>(R.id.addFab).setOnClickListener {
+            startActivity(Intent(this, AddMedicineActivity::class.java))
+        }
+
         setupHomeCarousel()
 
         findViewById<TextView>(R.id.motivationalQuoteText).text = MotivationalQuotes.getRandomQuote(this)
