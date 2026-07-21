@@ -11,6 +11,8 @@ import kotlinx.coroutines.launch
 class StatisticsActivity : BaseActivity() {
 
     private lateinit var repository: MedicineRepository
+    private var cachedLogs: List<DoseLog> = emptyList()
+    private var currentPeriod = "WEEKLY"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,6 +20,10 @@ class StatisticsActivity : BaseActivity() {
 
         repository = MedicineRepository(this)
         findViewById<TextView>(R.id.statsQuoteText).text = MotivationalQuotes.getRandomQuote(this)
+
+        findViewById<TextView>(R.id.tabWeekly).setOnClickListener { switchPeriod("WEEKLY") }
+        findViewById<TextView>(R.id.tabMonthly).setOnClickListener { switchPeriod("MONTHLY") }
+        findViewById<TextView>(R.id.tabYearly).setOnClickListener { switchPeriod("YEARLY") }
         loadStats()
     }
 
@@ -36,8 +42,48 @@ class StatisticsActivity : BaseActivity() {
             findViewById<TextView>(R.id.longestStreakText).text =
                 StatsCalculator.longestStreak(allLogs).toString()
 
-            buildWeeklyChart(StatsCalculator.weeklyBreakdown(allLogs, LocaleHelper.getLanguage(this@StatisticsActivity) == "en"))
+            cachedLogs = allLogs
+            renderChart()
         }
+    }
+
+    private fun switchPeriod(period: String) {
+        currentPeriod = period
+
+        val weeklyTab = findViewById<TextView>(R.id.tabWeekly)
+        val monthlyTab = findViewById<TextView>(R.id.tabMonthly)
+        val yearlyTab = findViewById<TextView>(R.id.tabYearly)
+
+        weeklyTab.setBackgroundResource(if (period == "WEEKLY") R.drawable.bg_day_upcoming else R.drawable.bg_stat_card)
+        weeklyTab.setTextColor(getColor(if (period == "WEEKLY") R.color.white else R.color.primary))
+        monthlyTab.setBackgroundResource(if (period == "MONTHLY") R.drawable.bg_day_upcoming else R.drawable.bg_stat_card)
+        monthlyTab.setTextColor(getColor(if (period == "MONTHLY") R.color.white else R.color.primary))
+        yearlyTab.setBackgroundResource(if (period == "YEARLY") R.drawable.bg_day_upcoming else R.drawable.bg_stat_card)
+        yearlyTab.setTextColor(getColor(if (period == "YEARLY") R.color.white else R.color.primary))
+
+        renderChart()
+    }
+
+    private fun renderChart() {
+        val isEnglish = LocaleHelper.getLanguage(this) == "en"
+        val label = findViewById<TextView>(R.id.chartPeriodLabel)
+
+        val data = when (currentPeriod) {
+            "MONTHLY" -> {
+                label.text = if (isEnglish) "This Month" else "এই মাসের হিসাব"
+                StatsCalculator.monthlyBreakdown(cachedLogs)
+            }
+            "YEARLY" -> {
+                label.text = if (isEnglish) "This Year" else "এই বছরের হিসাব"
+                StatsCalculator.yearlyBreakdown(cachedLogs, isEnglish)
+            }
+            else -> {
+                label.text = if (isEnglish) "Last 7 Days" else "গত ৭ দিনের হিসাব"
+                StatsCalculator.weeklyBreakdown(cachedLogs, isEnglish)
+            }
+        }
+
+        buildWeeklyChart(data)
     }
 
     private fun buildWeeklyChart(days: List<DayStat>) {

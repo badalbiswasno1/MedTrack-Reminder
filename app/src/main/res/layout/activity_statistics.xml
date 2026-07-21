@@ -184,7 +184,59 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/tabWeekly"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_day_upcoming"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="সপ্তাহ"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:layout_marginEnd="4dp" />
+
+            <TextView
+                android:id="@+id/tabMonthly"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_stat_card"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="মাস"
+                android:textColor="@color/primary"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:layout_marginHorizontal="4dp" />
+
+            <TextView
+                android:id="@+id/tabYearly"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_stat_card"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="বছর"
+                android:textColor="@color/primary"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:layout_marginStart="4dp" />
+
+        </LinearLayout>
+
         <TextView
+            android:id="@+id/chartPeriodLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="গত ৭ দিনের হিসাব"
@@ -193,16 +245,22 @@
             android:layout_marginStart="20dp"
             android:layout_marginBottom="8dp" />
 
-        <LinearLayout
-            android:id="@+id/weeklyChartContainer"
+        <HorizontalScrollView
             android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_margin="16dp">
+
+            <LinearLayout
+            android:id="@+id/weeklyChartContainer"
+            android:layout_width="wrap_content"
             android:layout_height="180dp"
             android:orientation="horizontal"
             android:background="@drawable/bg_card"
-            android:layout_margin="16dp"
             android:padding="16dp"
             android:gravity="bottom"
             android:weightSum="7" />
+
+        </HorizontalScrollView>
 
     </LinearLayout>
 </ScrollView>

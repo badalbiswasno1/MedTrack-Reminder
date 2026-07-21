@@ -66,6 +66,58 @@ object StatsCalculator {
         return streak
     }
 
+        fun monthlyBreakdown(logs: List<DoseLog>): List<DayStat> {
+        val cal = Calendar.getInstance()
+        val year = cal.get(Calendar.YEAR)
+        val month = cal.get(Calendar.MONTH)
+        val daysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH)
+        val result = mutableListOf<DayStat>()
+
+        for (day in 1..daysInMonth) {
+            val dayCal = Calendar.getInstance()
+            dayCal.set(year, month, day, 0, 0, 0)
+            dayCal.set(Calendar.MILLISECOND, 0)
+            val dayStart = dayCal.timeInMillis
+            val dayEnd = dayStart + 24 * 60 * 60 * 1000
+
+            val dayLogs = logs.filter { it.scheduledDateTime in dayStart until dayEnd }
+            val taken = dayLogs.count { it.status == DoseStatus.TAKEN }
+            val missed = dayLogs.count { it.status == DoseStatus.MISSED }
+
+            result.add(DayStat(day.toString(), taken, missed, dayLogs.size))
+        }
+        return result
+    }
+
+    fun yearlyBreakdown(logs: List<DoseLog>, isEnglish: Boolean = false): List<DayStat> {
+        val monthLabelsBn = listOf("জানু", "ফেব্রু", "মার্চ", "এপ্রি", "মে", "জুন", "জুলা", "আগ", "সেপ্ট", "অক্টো", "নভে", "ডিসে")
+        val monthLabelsEn = listOf("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+        val labels = if (isEnglish) monthLabelsEn else monthLabelsBn
+
+        val cal = Calendar.getInstance()
+        val year = cal.get(Calendar.YEAR)
+        val result = mutableListOf<DayStat>()
+
+        for (month in 0..11) {
+            val monthStartCal = Calendar.getInstance()
+            monthStartCal.set(year, month, 1, 0, 0, 0)
+            monthStartCal.set(Calendar.MILLISECOND, 0)
+            val monthStart = monthStartCal.timeInMillis
+
+            val monthEndCal = Calendar.getInstance()
+            monthEndCal.timeInMillis = monthStart
+            monthEndCal.add(Calendar.MONTH, 1)
+            val monthEnd = monthEndCal.timeInMillis
+
+            val monthLogs = logs.filter { it.scheduledDateTime in monthStart until monthEnd }
+            val taken = monthLogs.count { it.status == DoseStatus.TAKEN }
+            val missed = monthLogs.count { it.status == DoseStatus.MISSED }
+
+            result.add(DayStat(labels[month], taken, missed, monthLogs.size))
+        }
+        return result
+    }
+
     fun longestStreak(logs: List<DoseLog>): Int {
         val byDay = groupByDay(logs).toSortedMap()
         var longest = 0
