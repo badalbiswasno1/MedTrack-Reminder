@@ -5,10 +5,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [Medicine::class, DoseLog::class, HealthLog::class], version = 6, exportSchema = false)
+@Database(entities = [Medicine::class, DoseLog::class, HealthLog::class, DoctorAppointment::class], version = 7, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun medicineDao(): MedicineDao
+    abstract fun doctorAppointmentDao(): DoctorAppointmentDao
     abstract fun healthLogDao(): HealthLogDao
     abstract fun doseLogDao(): DoseLogDao
 

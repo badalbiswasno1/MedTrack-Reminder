@@ -9,6 +9,7 @@ class MedicineRepository(context: Context) {
     private val dao = AppDatabase.getInstance(context).medicineDao()
     private val logDao = AppDatabase.getInstance(context).doseLogDao()
     private val healthDao = AppDatabase.getInstance(context).healthLogDao()
+    private val appointmentDao = AppDatabase.getInstance(context).doctorAppointmentDao()
 
     fun getAll(): Flow<List<Medicine>> = dao.getAll()
 
@@ -103,4 +104,13 @@ class MedicineRepository(context: Context) {
         val end = start + 24 * 60 * 60 * 1000
         return healthDao.getCountByTypeInRange(type, start, end)
     }
+
+
+    suspend fun insertAppointment(appointment: DoctorAppointment): Long = appointmentDao.insert(appointment)
+
+    suspend fun getAllAppointments(): List<DoctorAppointment> = appointmentDao.getAll()
+
+    suspend fun getUpcomingAppointments(): List<DoctorAppointment> = appointmentDao.getUpcoming(System.currentTimeMillis())
+
+    suspend fun deleteAppointment(id: Long) = appointmentDao.deleteById(id)
 }
