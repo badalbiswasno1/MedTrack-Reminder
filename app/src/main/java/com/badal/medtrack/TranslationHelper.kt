@@ -18,6 +18,7 @@ object TranslationHelper {
     private var modelReady = false
 
     private const val TAG_ORIGINAL_TEXT = 0x7f100001
+    private const val TAG_ORIGINAL_HINT = 0x7f100002
 
     fun ensureModelDownloaded(context: Context, onReady: (() -> Unit)? = null) {
         if (translator == null) {
@@ -62,6 +63,10 @@ object TranslationHelper {
             val original = view.getTag(TAG_ORIGINAL_TEXT) as? String
             if (original != null) view.text = original
         }
+        if (view is EditText) {
+            val originalHint = view.getTag(TAG_ORIGINAL_HINT) as? String
+            if (originalHint != null) view.hint = originalHint
+        }
         if (view is ViewGroup) {
             for (i in 0 until view.childCount) {
                 restoreOriginal(view.getChildAt(i))
@@ -70,6 +75,28 @@ object TranslationHelper {
     }
 
     private fun translateTree(context: Context, view: View) {
+        if (view is EditText) {
+            val currentHint = view.hint?.toString() ?: ""
+            if (currentHint.isNotBlank() && containsBengali(currentHint)) {
+                if (view.getTag(TAG_ORIGINAL_HINT) == null) {
+                    view.setTag(TAG_ORIGINAL_HINT, currentHint)
+                }
+                val originalHint = view.getTag(TAG_ORIGINAL_HINT) as String
+
+                val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+                val cached = prefs.getString(originalHint, null)
+
+                if (cached != null) {
+                    view.hint = cached
+                } else {
+                    translator?.translate(originalHint)
+                        ?.addOnSuccessListener { translated ->
+                            view.hint = translated
+                            prefs.edit().putString(originalHint, translated).apply()
+                        }
+                }
+            }
+        }
         if (view is TextView && view !is EditText) {
             val current = view.text?.toString() ?: ""
             if (current.isNotBlank() && containsBengali(current)) {

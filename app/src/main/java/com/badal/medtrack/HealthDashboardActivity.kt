@@ -17,6 +17,9 @@ class HealthDashboardActivity : BaseActivity() {
     private lateinit var repository: MedicineRepository
     private val dateFormat = SimpleDateFormat("dd MMM, hh:mm a", Locale.getDefault())
 
+    private fun noDataLabel(): String =
+        if (LocaleHelper.getLanguage(this) == "en") "No data yet" else "এখনো কোনো তথ্য নেই"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_health)
@@ -151,31 +154,31 @@ class HealthDashboardActivity : BaseActivity() {
             val heartRateText = findViewById<TextView>(R.id.latestHeartRateText)
             heartRateText.text = if (heartRate != null)
                 "সর্বশেষ: ${heartRate.value1.toInt()} bpm (${dateFormat.format(Date(heartRate.recordedAt))})"
-            else "এখনো কোনো তথ্য নেই"
+            else noDataLabel()
             animateIn(heartRateText)
 
             val bpText = findViewById<TextView>(R.id.latestBpText)
             bpText.text = if (bp != null)
                 "সর্বশেষ: ${bp.value1.toInt()}/${bp.value2.toInt()} mmHg (${dateFormat.format(Date(bp.recordedAt))})"
-            else "এখনো কোনো তথ্য নেই"
+            else noDataLabel()
             animateIn(bpText)
 
             val sugarText = findViewById<TextView>(R.id.latestSugarText)
             sugarText.text = if (sugar != null)
                 "সর্বশেষ: ${sugar.value1} mg/dL (${dateFormat.format(Date(sugar.recordedAt))})"
-            else "এখনো কোনো তথ্য নেই"
+            else noDataLabel()
             animateIn(sugarText)
 
             val weightText = findViewById<TextView>(R.id.latestWeightText)
             weightText.text = if (weight != null)
                 "সর্বশেষ: ${weight.value1} কেজি (${dateFormat.format(Date(weight.recordedAt))})"
-            else "এখনো কোনো তথ্য নেই"
+            else noDataLabel()
             animateIn(weightText)
 
             val lipidText = findViewById<TextView>(R.id.latestLipidText)
             lipidText.text = if (lipid != null)
                 "সর্বশেষ: মোট ${lipid.value1.toInt()}, LDL ${lipid.value2.toInt()} mg/dL (${dateFormat.format(Date(lipid.recordedAt))})"
-            else "এখনো কোনো তথ্য নেই"
+            else noDataLabel()
             animateIn(lipidText)
         }
     }

@@ -262,7 +262,7 @@ class AddMedicineActivity : BaseActivity() {
                 )
                 repository.update(updated)
                 timeSlots.forEachIndexed { index, time ->
-                    AlarmScheduler.scheduleDose(this@AddMedicineActivity, updated.id, time, index)
+                    AlarmScheduler.scheduleDose(this@AddMedicineActivity, updated.id, time, index, updated.repeatPattern, updated.repeatDaysCsv)
                 }
             } else {
                 val medicine = Medicine(
@@ -282,7 +282,7 @@ class AddMedicineActivity : BaseActivity() {
                 )
                 val newId = repository.insert(medicine)
                 timeSlots.forEachIndexed { index, time ->
-                    AlarmScheduler.scheduleDose(this@AddMedicineActivity, newId, time, index)
+                    AlarmScheduler.scheduleDose(this@AddMedicineActivity, newId, time, index, medicine.repeatPattern, medicine.repeatDaysCsv)
                 }
             }
 

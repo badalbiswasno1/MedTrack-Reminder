@@ -46,7 +46,7 @@ class DoseAlarmReceiver : BroadcastReceiver() {
                         AlarmScheduler.scheduleFollowUp(context, medicineId, slotIndex)
                         val times = medicine.timesList()
                         if (slotIndex < times.size) {
-                            AlarmScheduler.scheduleDose(context, medicineId, times[slotIndex], slotIndex)
+                            AlarmScheduler.scheduleDose(context, medicineId, times[slotIndex], slotIndex, medicine.repeatPattern, medicine.repeatDaysCsv)
                         }
                     }
                 }

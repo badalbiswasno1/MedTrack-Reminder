@@ -9,7 +9,14 @@ import java.util.Calendar
 
 object AlarmScheduler {
 
-    fun scheduleDose(context: Context, medicineId: Long, timeStr: String, slotIndex: Int) {
+    fun scheduleDose(
+        context: Context,
+        medicineId: Long,
+        timeStr: String,
+        slotIndex: Int,
+        repeatPattern: String = "DAILY",
+        repeatDaysCsv: String = ""
+    ) {
         val parts = timeStr.split(":")
         if (parts.size != 2) return
         val hour = parts[0].toIntOrNull() ?: return
@@ -19,9 +26,11 @@ object AlarmScheduler {
             set(Calendar.HOUR_OF_DAY, hour)
             set(Calendar.MINUTE, minute)
             set(Calendar.SECOND, 0)
-            if (before(Calendar.getInstance())) {
-                add(Calendar.DAY_OF_YEAR, 1)
-            }
+        }
+
+        val now = Calendar.getInstance()
+        if (calendar.before(now) || !isValidDay(calendar, repeatPattern, repeatDaysCsv)) {
+            advanceToNextValidDay(calendar, repeatPattern, repeatDaysCsv)
         }
 
         val requestCode = doseRequestCode(medicineId, slotIndex)
@@ -40,7 +49,6 @@ object AlarmScheduler {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && !alarmManager.canScheduleExactAlarms()) {
-            // Permission not granted, fall back to inexact
             alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
             return
         }
@@ -50,6 +58,29 @@ object AlarmScheduler {
             calendar.timeInMillis,
             pendingIntent
         )
+    }
+
+    private fun isValidDay(cal: Calendar, pattern: String, repeatDaysCsv: String): Boolean {
+        return when (pattern) {
+            "ALTERNATE" -> {
+                val absoluteDay = (cal.get(Calendar.YEAR) * 366L) + cal.get(Calendar.DAY_OF_YEAR)
+                absoluteDay % 2 == 0L
+            }
+            "SPECIFIC" -> {
+                val days = repeatDaysCsv.split(",").mapNotNull { it.toIntOrNull() }.toSet()
+                if (days.isEmpty()) true else days.contains(cal.get(Calendar.DAY_OF_WEEK) - 1)
+            }
+            else -> true
+        }
+    }
+
+    private fun advanceToNextValidDay(cal: Calendar, pattern: String, repeatDaysCsv: String) {
+        cal.add(Calendar.DAY_OF_YEAR, 1)
+        var attempts = 0
+        while (!isValidDay(cal, pattern, repeatDaysCsv) && attempts < 14) {
+            cal.add(Calendar.DAY_OF_YEAR, 1)
+            attempts++
+        }
     }
 
     fun scheduleFollowUp(context: Context, medicineId: Long, slotIndex: Int) {

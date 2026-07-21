@@ -20,7 +20,7 @@ class BootReceiver : BroadcastReceiver() {
                 for (medicine in medicines) {
                     val times = medicine.timesList()
                     times.forEachIndexed { index, timeStr ->
-                        AlarmScheduler.scheduleDose(context, medicine.id, timeStr, index)
+                        AlarmScheduler.scheduleDose(context, medicine.id, timeStr, index, medicine.repeatPattern, medicine.repeatDaysCsv)
                     }
                 }
                 LowStockWorker.triggerNow(context)
