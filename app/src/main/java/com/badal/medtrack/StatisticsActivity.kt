@@ -17,6 +17,7 @@ class StatisticsActivity : BaseActivity() {
         setContentView(R.layout.activity_statistics)
 
         repository = MedicineRepository(this)
+        findViewById<TextView>(R.id.statsQuoteText).text = MotivationalQuotes.getRandomQuote(this)
         loadStats()
     }
 

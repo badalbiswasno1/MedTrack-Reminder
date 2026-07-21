@@ -86,6 +86,8 @@ class MainActivity : BaseActivity() {
 
         setupHomeCarousel()
 
+        findViewById<TextView>(R.id.motivationalQuoteText).text = MotivationalQuotes.getRandomQuote(this)
+
         
 
 

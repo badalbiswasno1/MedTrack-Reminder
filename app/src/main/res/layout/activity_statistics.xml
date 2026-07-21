@@ -41,6 +41,16 @@
                 android:textColor="#D9FFFFFF"
                 android:textSize="13sp" />
 
+            <TextView
+                android:id="@+id/statsQuoteText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text=""
+                android:textColor="#F2FFFFFF"
+                android:textStyle="italic"
+                android:textSize="12sp" />
+
         </LinearLayout>
 
         <LinearLayout
