@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/bg_gradient_header"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ডাক্তারের অ্যাপয়েন্টমেন্ট"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/bg_card"
+        android:layout_margin="16dp"
+        android:padding="16dp">
+
+        <EditText
+            android:id="@+id/aptDoctorInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="ডাক্তারের নাম"
+            android:background="@drawable/bg_stat_card"
+            android:padding="10dp" />
+
+        <EditText
+            android:id="@+id/aptLocationInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="স্থান (ঐচ্ছিক)"
+            android:background="@drawable/bg_stat_card"
+            android:padding="10dp" />
+
+        <TextView
+            android:id="@+id/aptDateTimeButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_stat_card"
+            android:gravity="center"
+            android:padding="12dp"
+            android:text="তারিখ ও সময় বেছে নিন"
+            android:textColor="@color/primary"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/aptSaveButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_day_upcoming"
+            android:gravity="center"
+            android:padding="12dp"
+            android:text="যোগ করুন"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/aptEmptyText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="কোনো অ্যাপয়েন্টমেন্ট নেই"
+        android:textColor="@color/on_surface_variant"
+        android:textSize="13sp"
+        android:visibility="gone" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/aptRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>
