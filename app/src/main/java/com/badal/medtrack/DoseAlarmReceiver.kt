@@ -1,5 +1,8 @@
 package com.badal.medtrack
 
+import android.graphics.BitmapFactory
+import java.io.File
+
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
@@ -112,11 +115,25 @@ class DoseAlarmReceiver : BroadcastReceiver() {
         val title = if (isFollowUp) "মনে করিয়ে দিচ্ছি: ${medicine.name}" else "ওষুধ খাওয়ার সময় হয়েছে"
         val body = "${medicine.name} - ${medicine.dose}"
 
+        val notificationStyle = if (medicine.photoPath.isNotBlank() && File(medicine.photoPath).exists()) {
+            val bitmap = BitmapFactory.decodeFile(medicine.photoPath)
+            if (bitmap != null) {
+                NotificationCompat.BigPictureStyle()
+                    .bigPicture(bitmap)
+                    .setBigContentTitle(title)
+                    .setSummaryText(body)
+            } else {
+                NotificationCompat.BigTextStyle().bigText(body)
+            }
+        } else {
+            NotificationCompat.BigTextStyle().bigText(body)
+        }
+
         val notification = NotificationCompat.Builder(context, NotificationHelper.CHANNEL_DOSE)
             .setSmallIcon(android.R.drawable.ic_dialog_info)
             .setContentTitle(title)
             .setContentText(body)
-            .setStyle(NotificationCompat.BigTextStyle().bigText(body))
+            .setStyle(notificationStyle)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)
             .addAction(android.R.drawable.checkbox_on_background, "✔ Taken", takenPendingIntent)
