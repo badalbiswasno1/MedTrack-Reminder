@@ -34,6 +34,15 @@
                 android:textColor="#D9FFFFFF"
                 android:textSize="14sp" />
 
+            <ImageView
+                android:id="@+id/detailPhotoImage"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_marginTop="14dp"
+                android:scaleType="centerCrop"
+                android:background="@drawable/bg_card"
+                android:visibility="gone" />
+
         </LinearLayout>
 
         <LinearLayout

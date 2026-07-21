@@ -1,5 +1,9 @@
 package com.badal.medtrack
 
+import android.net.Uri
+import android.widget.ImageView
+import java.io.File
+
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -53,6 +57,14 @@ class MedicineDetailActivity : BaseActivity() {
             findViewById<TextView>(R.id.detailStockText).text = "${medicine.quantity} টি বাকি আছে"
             findViewById<TextView>(R.id.detailNotesText).text =
                 medicine.notes.ifBlank { "কোনো নোট নেই" }
+
+            val photoView = findViewById<ImageView>(R.id.detailPhotoImage)
+            if (medicine.photoPath.isNotBlank() && File(medicine.photoPath).exists()) {
+                photoView.visibility = View.VISIBLE
+                photoView.setImageURI(Uri.fromFile(File(medicine.photoPath)))
+            } else {
+                photoView.visibility = View.GONE
+            }
         }
     }
 }
