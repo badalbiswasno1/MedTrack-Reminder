@@ -327,6 +327,9 @@ class MainActivity : BaseActivity() {
             },
             HomeAction("❓ সাহায্য কেন্দ্র", R.color.primary) {
                 startActivity(Intent(this, HelpCenterActivity::class.java))
+            },
+            HomeAction("🩺 ডাক্তারের অ্যাপয়েন্টমেন্ট", R.color.secondary) {
+                startActivity(Intent(this, AppointmentActivity::class.java))
             }
         )
 

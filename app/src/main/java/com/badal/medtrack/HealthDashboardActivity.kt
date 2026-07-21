@@ -34,6 +34,7 @@ class HealthDashboardActivity : BaseActivity() {
         findViewById<TextView>(R.id.saveSugarButton).setOnClickListener { saveSugar() }
         findViewById<TextView>(R.id.saveWeightButton).setOnClickListener { saveWeight() }
         findViewById<TextView>(R.id.saveLipidButton).setOnClickListener { saveLipid() }
+        findViewById<TextView>(R.id.bmiCalculateButton).setOnClickListener { calculateBmi() }
 
         loadAll()
     }
@@ -122,6 +123,31 @@ class HealthDashboardActivity : BaseActivity() {
             loadAll()
             Toast.makeText(this@HealthDashboardActivity, "সেভ হয়েছে", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun calculateBmi() {
+        val heightCm = findViewById<android.widget.EditText>(R.id.bmiHeightInput).text.toString().toFloatOrNull()
+        val weightKg = findViewById<android.widget.EditText>(R.id.bmiWeightInput).text.toString().toFloatOrNull()
+
+        if (heightCm == null || weightKg == null || heightCm <= 0f) {
+            Toast.makeText(this, "সঠিক মান দিন", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val heightM = heightCm / 100f
+        val bmi = weightKg / (heightM * heightM)
+
+        val isEnglish = LocaleHelper.getLanguage(this) == "en"
+        val category = when {
+            bmi < 18.5f -> if (isEnglish) "Underweight" else "স্বল্প ওজন"
+            bmi < 25f -> if (isEnglish) "Normal" else "স্বাভাবিক"
+            bmi < 30f -> if (isEnglish) "Overweight" else "অতিরিক্ত ওজন"
+            else -> if (isEnglish) "Obese" else "স্থূল"
+        }
+
+        val bmiRounded = String.format("%.1f", bmi)
+        findViewById<TextView>(R.id.bmiResultText).text =
+            if (isEnglish) "BMI: $bmiRounded ($category)" else "BMI: $bmiRounded ($category)"
     }
 
     private fun saveLipid() {
