@@ -45,13 +45,75 @@
                 android:textSize="16sp"
                 android:layout_marginBottom="10dp" />
 
+            
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="রিমাইন্ডার কাজ করছে না কেন?\nফোনের Battery Optimization থেকে MedTrack কে বাদ দিন (Settings → Apps → MedTrack → Battery → Unrestricted), এবং নোটিফিকেশন পারমিশন চালু আছে কিনা দেখুন।\n\nনোটিফিকেশন কেন আসছে না?\nSettings → Apps → MedTrack → Notifications এ গিয়ে সব notification channel চালু আছে কিনা যাচাই করুন। Do Not Disturb মোড বন্ধ রাখুন সময়মতো।\n\nব্যাকগ্রাউন্ডে অ্যাপ বন্ধ হয়ে যায় কেন?\nকিছু ফোনে (Xiaomi, Oppo, Vivo) নিজস্ব battery saver থাকে যা অ্যাপকে জোর করে বন্ধ করে দেয়। সেটিংসে গিয়ে MedTrack কে Autostart/Protected App হিসেবে চিহ্নিত করুন।\n\nওষুধ ম্যানেজমেন্ট কীভাবে করবো?\nহোম স্ক্রিনের + বাটনে ওষুধ যোগ করুন, স্টক ফুরিয়ে গেলে Low Stock পেজে দেখা যাবে, প্রতিদিনের হিসাব Statistics পেজে পাবেন।"
+                android:layout_marginTop="12dp"
+                android:text="রিমাইন্ডার কাজ করছে না কেন?"
+                android:textColor="@color/primary"
+                android:textStyle="bold"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="ফোনের Battery Optimization থেকে MedTrack কে বাদ দিন (Settings → Apps → MedTrack → Battery → Unrestricted), এবং নোটিফিকেশন পারমিশন চালু আছে কিনা দেখুন।"
                 android:textColor="@color/on_surface_variant"
                 android:textSize="13sp"
-                android:lineSpacingExtra="6dp" />
+                android:lineSpacingExtra="4dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="নোটিফিকেশন কেন আসছে না?"
+                android:textColor="@color/primary"
+                android:textStyle="bold"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Settings → Apps → MedTrack → Notifications এ গিয়ে সব notification channel চালু আছে কিনা যাচাই করুন। প্রয়োজনের সময় Do Not Disturb মোড বন্ধ রাখুন।"
+                android:textColor="@color/on_surface_variant"
+                android:textSize="13sp"
+                android:lineSpacingExtra="4dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="ব্যাকগ্রাউন্ডে অ্যাপ বন্ধ হয়ে যায় কেন?"
+                android:textColor="@color/primary"
+                android:textStyle="bold"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="কিছু ফোনে (Xiaomi, Oppo, Vivo) নিজস্ব battery saver থাকে যা অ্যাপকে জোর করে বন্ধ করে দেয়। সেটিংসে গিয়ে MedTrack কে Autostart/Protected App হিসেবে চিহ্নিত করুন।"
+                android:textColor="@color/on_surface_variant"
+                android:textSize="13sp"
+                android:lineSpacingExtra="4dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="ওষুধ ম্যানেজমেন্ট কীভাবে করবো?"
+                android:textColor="@color/primary"
+                android:textStyle="bold"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="হোম স্ক্রিনের + বাটনে ওষুধ যোগ করুন, স্টক ফুরিয়ে গেলে Low Stock পেজে দেখা যাবে, প্রতিদিনের হিসাব Statistics পেজে পাবেন।"
+                android:textColor="@color/on_surface_variant"
+                android:textSize="13sp"
+                android:lineSpacingExtra="4dp" />
 
         </LinearLayout>
 
@@ -137,7 +199,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="MedTrack আপনার কোনো ব্যক্তিগত তথ্য বাইরের সার্ভারে পাঠায় না। ওষুধ ও স্বাস্থ্য সংক্রান্ত সব তথ্য শুধু আপনার ফোনেই সংরক্ষিত থাকে। ব্যাকআপ ফাইল আপনি নিজে শেয়ার না করলে অন্য কোথাও যায় না।\n\nএই অ্যাপ কোনো চিকিৎসা পরামর্শ প্রদান করে না। ওষুধ সংক্রান্ত যেকোনো সিদ্ধান্তের আগে ডাক্তারের পরামর্শ নিন।"
+                android:text="গোপনীয়তা নীতি\n\nMedTrack আপনার কোনো ব্যক্তিগত বা স্বাস্থ্য সংক্রান্ত তথ্য কোনো বাইরের সার্ভারে পাঠায় না বা কোনো তৃতীয় পক্ষের সাথে শেয়ার করে না। ওষুধের নাম, ডোজ, স্বাস্থ্য রিডিং (BP/সুগার/ওজন ইত্যাদি), এবং ব্যবহারের ইতিহাস — সবকিছু শুধুমাত্র আপনার ফোনের স্থানীয় ডাটাবেসে সংরক্ষিত থাকে। প্রেসক্রিপশন স্ক্যান (OCR) এবং ভাষা অনুবাদ সম্পূর্ণ অফলাইনে, আপনার ডিভাইসেই সম্পন্ন হয়। আপনি যদি নিজে ব্যাকআপ ফাইল (CSV) শেয়ার করেন, শুধু তখনই সেই তথ্য আপনার ফোনের বাইরে যায় — সম্পূর্ণ আপনার নিয়ন্ত্রণে।\n\nশর্তাবলী\n\nMedTrack একটি ব্যক্তিগত ওষুধ ব্যবস্থাপনার সহায়ক টুল, এটি কোনো চিকিৎসা পরামর্শ, রোগ নির্ণয়, বা চিকিৎসা সেবার বিকল্প নয়। ওষুধ শুরু, বন্ধ, বা পরিবর্তনের যেকোনো সিদ্ধান্তের আগে অবশ্যই একজন যোগ্য ডাক্তারের পরামর্শ নিন। রিমাইন্ডার নোটিফিকেশন ফোনের সিস্টেম সেটিংস, ব্যাটারি অপ্টিমাইজেশন, বা নেটওয়ার্ক সমস্যার কারণে বিলম্বিত বা বাদ যেতে পারে — তাই এটিকে একমাত্র নির্ভরযোগ্য মাধ্যম হিসেবে বিবেচনা না করাই ভালো।"
                 android:textColor="@color/on_surface_variant"
                 android:textSize="13sp"
                 android:lineSpacingExtra="6dp" />
