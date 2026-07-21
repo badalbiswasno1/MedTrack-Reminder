@@ -1,5 +1,7 @@
 package com.badal.medtrack
 
+import android.widget.LinearLayout
+
 import android.widget.Toast
 
 import android.Manifest
@@ -82,44 +84,9 @@ class MainActivity : BaseActivity() {
         recyclerView.adapter = adapter
         attachSwipeGestures()
 
-        findViewById<View>(R.id.addFab).setOnClickListener {
-            startActivity(Intent(this, AddMedicineActivity::class.java))
-        }
+        setupHomeCarousel()
 
-        findViewById<View>(R.id.statsButton).setOnClickListener {
-            startActivity(Intent(this, StatisticsActivity::class.java))
-        }
-
-        findViewById<View>(R.id.calendarButton).setOnClickListener {
-            startActivity(Intent(this, CalendarActivity::class.java))
-        }
-
-        findViewById<View>(R.id.lowStockButton).setOnClickListener {
-            startActivity(Intent(this, LowStockActivity::class.java))
-        }
-
-        findViewById<View>(R.id.searchButton).setOnClickListener {
-            startActivity(Intent(this, SearchActivity::class.java))
-        }
-
-
-
-        findViewById<View>(R.id.healthButton).setOnClickListener {
-            startActivity(Intent(this, HealthDashboardActivity::class.java))
-        }
-
-        findViewById<View>(R.id.ocrButton).setOnClickListener {
-            startActivity(Intent(this, OcrScanActivity::class.java))
-        }
-
-        findViewById<View>(R.id.settingsButton).setOnClickListener {
-            startActivity(Intent(this, SettingsActivity::class.java))
-        }
-
-        findViewById<View>(R.id.helpButton).setOnClickListener {
-            startActivity(Intent(this, HelpCenterActivity::class.java))
-        }
-
+        
 
 
         setGreeting()
@@ -332,4 +299,66 @@ class MainActivity : BaseActivity() {
         }
     }
 
+
+    private fun setupHomeCarousel() {
+        val actions = listOf(
+            HomeAction("📊 বিস্তারিত পরিসংখ্যান দেখো", R.color.primary) {
+                startActivity(Intent(this, StatisticsActivity::class.java))
+            },
+            HomeAction("📅 ক্যালেন্ডার দেখো", R.color.primary) {
+                startActivity(Intent(this, CalendarActivity::class.java))
+            },
+            HomeAction("⚠️ কম স্টক থাকা ওষুধ", R.color.danger) {
+                startActivity(Intent(this, LowStockActivity::class.java))
+            },
+            HomeAction("🔍 ওষুধ খুঁজুন", R.color.secondary) {
+                startActivity(Intent(this, SearchActivity::class.java))
+            },
+            HomeAction("❤️ স্বাস্থ্য ড্যাশবোর্ড", R.color.primary) {
+                startActivity(Intent(this, HealthDashboardActivity::class.java))
+            },
+            HomeAction("📷 প্রেসক্রিপশন স্ক্যান করুন", R.color.secondary) {
+                startActivity(Intent(this, OcrScanActivity::class.java))
+            },
+            HomeAction("⚙️ সেটিংস", R.color.accent) {
+                startActivity(Intent(this, SettingsActivity::class.java))
+            },
+            HomeAction("❓ সাহায্য কেন্দ্র", R.color.primary) {
+                startActivity(Intent(this, HelpCenterActivity::class.java))
+            }
+        )
+
+        val adapter = HomeCarouselAdapter(actions)
+        val pager = findViewById<androidx.viewpager2.widget.ViewPager2>(R.id.homeCarousel)
+        pager.adapter = adapter
+
+        val dotsContainer = findViewById<LinearLayout>(R.id.carouselDots)
+        val pageCount = adapter.getRealPageCount()
+        val dots = mutableListOf<View>()
+
+        if (pageCount > 1) {
+            for (i in 0 until pageCount) {
+                val dot = View(this)
+                val size = (8 * resources.displayMetrics.density).toInt()
+                val params = LinearLayout.LayoutParams(size, size)
+                params.marginStart = (4 * resources.displayMetrics.density).toInt()
+                params.marginEnd = (4 * resources.displayMetrics.density).toInt()
+                dot.layoutParams = params
+                dot.setBackgroundResource(if (i == 0) R.drawable.dot_active else R.drawable.dot_inactive)
+                dotsContainer.addView(dot)
+                dots.add(dot)
+            }
+
+            pager.setCurrentItem(adapter.getStartPosition(), false)
+
+            pager.registerOnPageChangeCallback(object : androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    val realPage = position % pageCount
+                    dots.forEachIndexed { index, dot ->
+                        dot.setBackgroundResource(if (index == realPage) R.drawable.dot_active else R.drawable.dot_inactive)
+                    }
+                }
+            })
+        }
+    }
 }

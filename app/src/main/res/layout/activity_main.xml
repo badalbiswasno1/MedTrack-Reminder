@@ -125,165 +125,20 @@
 
             </LinearLayout>
 
-            <GridLayout
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/homeCarousel"
                 android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_marginTop="16dp" />
+
+            <LinearLayout
+                android:id="@+id/carouselDots"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:columnCount="2"
-                android:rowCount="5"
-                android:useDefaultMargins="false">
-
-                <TextView
-                    android:id="@+id/statsButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:minHeight="64dp"
-                    android:layout_margin="6dp"
-                    android:background="@drawable/bg_card"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center"
-                    android:padding="8dp"
-                    android:text="@string/stats_button"
-                    android:textColor="@color/primary"
-                    android:textStyle="bold"
-                    android:textSize="11sp"
-                    android:maxLines="2" />
-                <TextView
-                    android:id="@+id/calendarButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:minHeight="64dp"
-                    android:layout_margin="6dp"
-                    android:background="@drawable/bg_card"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center"
-                    android:padding="8dp"
-                    android:text="@string/calendar_button"
-                    android:textColor="@color/primary"
-                    android:textStyle="bold"
-                    android:textSize="11sp"
-                    android:maxLines="2" />
-                <TextView
-                    android:id="@+id/lowStockButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:minHeight="64dp"
-                    android:layout_margin="6dp"
-                    android:background="@drawable/bg_card"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center"
-                    android:padding="8dp"
-                    android:text="@string/low_stock_button"
-                    android:textColor="@color/danger"
-                    android:textStyle="bold"
-                    android:textSize="11sp"
-                    android:maxLines="2" />
-                <TextView
-                    android:id="@+id/searchButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:minHeight="64dp"
-                    android:layout_margin="6dp"
-                    android:background="@drawable/bg_card"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center"
-                    android:padding="8dp"
-                    android:text="@string/search_button"
-                    android:textColor="@color/secondary"
-                    android:textStyle="bold"
-                    android:textSize="11sp"
-                    android:maxLines="2" />
-                
-                
-                <TextView
-                    android:id="@+id/healthButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:minHeight="64dp"
-                    android:layout_margin="6dp"
-                    android:background="@drawable/bg_card"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center"
-                    android:padding="8dp"
-                    android:text="@string/health_button"
-                    android:textColor="@color/primary"
-                    android:textStyle="bold"
-                    android:textSize="11sp"
-                    android:maxLines="2" />
-                <TextView
-                    android:id="@+id/ocrButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:minHeight="64dp"
-                    android:layout_margin="6dp"
-                    android:background="@drawable/bg_card"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center"
-                    android:padding="8dp"
-                    android:text="@string/ocr_button"
-                    android:textColor="@color/secondary"
-                    android:textStyle="bold"
-                    android:textSize="11sp"
-                    android:maxLines="2" />
-                
-                
-
-            
-                <TextView
-                    android:id="@+id/settingsButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:minHeight="64dp"
-                    android:layout_margin="6dp"
-                    android:background="@drawable/bg_card"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center"
-                    android:padding="8dp"
-                    android:text="@string/settings_button"
-                    android:textColor="@color/accent"
-                    android:textStyle="bold"
-                    android:textSize="11sp"
-                    android:maxLines="2" />
-                <TextView
-                    android:id="@+id/helpButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:minHeight="64dp"
-                    android:layout_margin="6dp"
-                    android:background="@drawable/bg_card"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center"
-                    android:padding="8dp"
-                    android:text="@string/help_button"
-                    android:textColor="@color/primary"
-                    android:textStyle="bold"
-                    android:textSize="11sp"
-                    android:maxLines="2" />
-</GridLayout>
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="6dp"
+                android:orientation="horizontal"
+                android:gravity="center" />
 
             <!-- Next Dose Card -->
             <LinearLayout
