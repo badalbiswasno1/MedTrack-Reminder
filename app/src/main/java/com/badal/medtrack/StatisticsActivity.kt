@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.Gravity
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 
@@ -24,6 +23,7 @@ class StatisticsActivity : BaseActivity() {
         findViewById<TextView>(R.id.tabWeekly).setOnClickListener { switchPeriod("WEEKLY") }
         findViewById<TextView>(R.id.tabMonthly).setOnClickListener { switchPeriod("MONTHLY") }
         findViewById<TextView>(R.id.tabYearly).setOnClickListener { switchPeriod("YEARLY") }
+
         loadStats()
     }
 
@@ -96,7 +96,7 @@ class StatisticsActivity : BaseActivity() {
             val column = LinearLayout(this)
             column.orientation = LinearLayout.VERTICAL
             column.gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
-            val columnParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f)
+            val columnParams = LinearLayout.LayoutParams(80, LinearLayout.LayoutParams.MATCH_PARENT)
             columnParams.marginEnd = 6
             columnParams.marginStart = 6
             column.layoutParams = columnParams
