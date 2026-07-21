@@ -20,7 +20,8 @@ data class Medicine(
     val medicineType: String = "ট্যাবলেট",
     val colorHex: String = "#00695C",
     val repeatPattern: String = "DAILY",
-    val repeatDaysCsv: String = ""
+    val repeatDaysCsv: String = "",
+    val photoPath: String = ""
 )
 
 fun Medicine.timesList(): List<String> =

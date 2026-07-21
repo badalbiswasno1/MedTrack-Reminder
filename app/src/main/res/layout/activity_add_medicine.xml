@@ -117,6 +117,75 @@
             android:layout_marginTop="10dp"
             android:visibility="gone" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="ওষুধের ছবি (ঐচ্ছিক)"
+            android:textColor="@color/on_surface"
+            android:textStyle="bold"
+            android:textSize="13sp" />
+
+        <ImageView
+            android:id="@+id/photoPreview"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="8dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/bg_stat_card"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:id="@+id/pickPhotoCameraButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="6dp"
+                android:background="@drawable/bg_day_upcoming"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="ক্যামেরা"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/pickPhotoGalleryButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="6dp"
+                android:background="@drawable/bg_stat_card"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="গ্যালারি"
+                android:textColor="@color/primary"
+                android:textStyle="bold"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/removePhotoButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="6dp"
+                android:background="@drawable/bg_stat_card"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="মুছুন"
+                android:textColor="@color/danger"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
         <EditText
             android:id="@+id/doctorNameInput"
             android:layout_width="match_parent"

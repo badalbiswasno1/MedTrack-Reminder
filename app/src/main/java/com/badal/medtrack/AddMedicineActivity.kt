@@ -1,5 +1,12 @@
 package com.badal.medtrack
 
+import android.net.Uri
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.FileProvider
+import android.widget.ImageView
+import java.io.File
+import java.io.FileOutputStream
+
 import android.widget.Spinner
 
 import android.app.TimePickerDialog
@@ -35,6 +42,21 @@ class AddMedicineActivity : BaseActivity() {
     private val weekDayNames = listOf("রবি", "সোম", "মঙ্গল", "বুধ", "বৃহঃ", "শুক্র", "শনি")
     private var selectedColor = "#00695C"
     private val selectedDays = mutableSetOf<Int>()
+    private lateinit var photoPreview: ImageView
+    private var currentPhotoPath: String? = null
+    private var pendingCameraUri: Uri? = null
+
+    private val galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+        if (uri != null) copyImageToInternalStorage(uri)
+    }
+
+    private val cameraLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
+        if (success && pendingCameraUri != null) copyImageToInternalStorage(pendingCameraUri!!)
+    }
+
+    private val cameraPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+        if (granted) launchCamera()
+    }
     private lateinit var doctorNameInput: EditText
     private lateinit var expiryDateInput: EditText
     private lateinit var notesInput: EditText
@@ -79,6 +101,11 @@ class AddMedicineActivity : BaseActivity() {
         specificDaysContainer = findViewById(R.id.specificDaysContainer)
         setupColorSwatches()
         setupDayCheckboxes()
+
+        photoPreview = findViewById(R.id.photoPreview)
+        findViewById<View>(R.id.pickPhotoCameraButton).setOnClickListener { checkCameraPermissionAndLaunch() }
+        findViewById<View>(R.id.pickPhotoGalleryButton).setOnClickListener { galleryLauncher.launch("image/*") }
+        findViewById<View>(R.id.removePhotoButton).setOnClickListener { clearPhoto() }
         doctorNameInput = findViewById(R.id.doctorNameInput)
         expiryDateInput = findViewById(R.id.expiryDateInput)
         notesInput = findViewById(R.id.notesInput)
@@ -126,6 +153,11 @@ class AddMedicineActivity : BaseActivity() {
                     selectedDays.clear()
                     medicine.repeatDaysCsv.split(",").mapNotNull { it.toIntOrNull() }.forEach { selectedDays.add(it) }
                     setupDayCheckboxes()
+                }
+
+                if (medicine.photoPath.isNotBlank() && File(medicine.photoPath).exists()) {
+                    currentPhotoPath = medicine.photoPath
+                    showPhotoPreview(medicine.photoPath)
                 }
             }
         }
@@ -211,6 +243,55 @@ class AddMedicineActivity : BaseActivity() {
         }
     }
 
+    private fun checkCameraPermissionAndLaunch() {
+        val permission = android.Manifest.permission.CAMERA
+        if (androidx.core.content.ContextCompat.checkSelfPermission(this, permission) ==
+            android.content.pm.PackageManager.PERMISSION_GRANTED) {
+            launchCamera()
+        } else {
+            cameraPermissionLauncher.launch(permission)
+        }
+    }
+
+    private fun launchCamera() {
+        val dir = File(externalCacheDir, "temp_photos")
+        if (!dir.exists()) dir.mkdirs()
+        val file = File(dir, "temp_${System.currentTimeMillis()}.jpg")
+        pendingCameraUri = FileProvider.getUriForFile(this, "$packageName.fileprovider", file)
+        cameraLauncher.launch(pendingCameraUri)
+    }
+
+    private fun copyImageToInternalStorage(uri: Uri) {
+        try {
+            val dir = File(filesDir, "medicine_photos")
+            if (!dir.exists()) dir.mkdirs()
+            val destFile = File(dir, "med_${System.currentTimeMillis()}.jpg")
+
+            contentResolver.openInputStream(uri)?.use { input ->
+                FileOutputStream(destFile).use { output ->
+                    input.copyTo(output)
+                }
+            }
+
+            currentPhotoPath = destFile.absolutePath
+            showPhotoPreview(destFile.absolutePath)
+        } catch (e: Exception) {
+            Toast.makeText(this, "ছবি সেভ করতে সমস্যা হয়েছে", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun showPhotoPreview(path: String) {
+        photoPreview.visibility = View.VISIBLE
+        photoPreview.setImageURI(Uri.fromFile(File(path)))
+        findViewById<View>(R.id.removePhotoButton).visibility = View.VISIBLE
+    }
+
+    private fun clearPhoto() {
+        currentPhotoPath = null
+        photoPreview.visibility = View.GONE
+        findViewById<View>(R.id.removePhotoButton).visibility = View.GONE
+    }
+
     private fun saveMedicine() {
         val name = nameInput.text.toString().trim()
         val genericName = genericNameInput.text.toString().trim()
@@ -258,7 +339,8 @@ class AddMedicineActivity : BaseActivity() {
                     medicineType = medicineType,
                     colorHex = selectedColor,
                     repeatPattern = repeatPattern,
-                    repeatDaysCsv = repeatDaysCsv
+                    repeatDaysCsv = repeatDaysCsv,
+                    photoPath = currentPhotoPath ?: ""
                 )
                 repository.update(updated)
                 timeSlots.forEachIndexed { index, time ->
@@ -278,7 +360,8 @@ class AddMedicineActivity : BaseActivity() {
                     medicineType = medicineType,
                     colorHex = selectedColor,
                     repeatPattern = repeatPattern,
-                    repeatDaysCsv = repeatDaysCsv
+                    repeatDaysCsv = repeatDaysCsv,
+                    photoPath = currentPhotoPath ?: ""
                 )
                 val newId = repository.insert(medicine)
                 timeSlots.forEachIndexed { index, time ->
